@@ -1,0 +1,11 @@
+# %%writefile dataset.yml
+# # train and val data
+train: ../dataset/train/images/
+val: ../dataset/val/images
+test: ../dataset/test/images
+
+# number of classes
+nc: 1
+
+# class names
+names: ['smoking']
