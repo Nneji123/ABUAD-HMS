@@ -29,4 +29,4 @@ seaborn>=0.11.0
 # coremltools>=6.0  # CoreML export
 onnx>=1.12.0  # ONNX export
 onnx-simplifier>=0.4.1  # ONNX simplifier
-
+WebUI @ git+https://github.com/Widdershin/flask-desktop.git@9f0e9e033909516e1c0669fdf38e9c9c904fe7ac

@@ -1,116 +1,53 @@
-
 import os
-import sys
-from pathlib import Path
 
 import sqlalchemy
-
 from dotenv import load_dotenv
-from flask import Flask, Response, render_template
+from flask import Flask, render_template
 from flask_login import LoginManager
+from webui import WebUI
 
-import torch
-from models.common import DetectMultiBackend
-from utils.dataloaders import LoadStreams
-from utils.general import (Profile, check_img_size, check_imshow, cv2,
-                           increment_path, non_max_suppression, scale_boxes)
-from utils.plots import Annotator, colors, save_one_box
-from utils.torch_utils import select_device, smart_inference_mode
+from index import index
+from login import login
+from logout import logout
+from schema import Users, db
+from register import register
+from home import home
 
-app = Flask(__name__, static_folder="static", template_folder="templates")
-
-
-FILE = Path(__file__).resolve()
-ROOT = FILE.parents[0]  # YOLOv5 root directory
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))  # add ROOT to PATH
-ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
+load_dotenv()
 
 
-
-@smart_inference_mode()
-def run( imgsz=(640, 640), conf_thres=0.2, iou_thres=0.45, max_det=1000,  view_img=False,  save_crop=False, visualize=False,line_thickness=2,hide_labels=False, hide_conf=False):
-    source = str(0)
-    # Directories
-    save_dir = increment_path(Path('runs/detect') / 'exp', exist_ok=False)  # increment run
-
-    # Load model
-    device = select_device("gpu" if torch.cuda.is_available() else "cpu")
-    model = DetectMultiBackend(weights="best.onnx", device=device)
-    stride, names, pt = model.stride, model.names, model.pt
-    imgsz = check_img_size(imgsz, s=stride)  # check image size
-
-    # Dataloader
-    view_img = check_imshow(warn=True)
-    dataset = LoadStreams(source, img_size=imgsz, stride=stride, auto=pt, vid_stride=1)
+app = Flask(__name__, static_folder="./templates/static")
+ui = WebUI(app, url="127.0.0.1", port=3000, debug=False, using_win32=True, icon_path="logo.ico", app_name="SmokeDetector" ) # Add WebUI
+# ui = FlaskUI(app, width=800, height=600) # Add WebUI
 
 
-    seen, windows, dt = 0, [], (Profile(), Profile(), Profile())
-    for path, im, im0s, vid_cap, s in dataset:
-        with dt[0]:
-            im = torch.from_numpy(im).to(model.device)
-            im = im.half() if model.fp16 else im.float()  # uint8 to fp16/32
-            im /= 255  # 0 - 255 to 0.0 - 1.0
-            if len(im.shape) == 3:
-                im = im[None]  # expand for batch dim
+SQLITE = os.getenv("SQLITE")
 
-        # Inference
-        with dt[1]:
-            visualize = increment_path(save_dir / Path(path).stem, mkdir=True) if visualize else False
-            pred = model(im, augment=False, visualize=visualize)
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
-        # NMS
-        with dt[2]:
-            pred = non_max_suppression(pred, conf_thres, iou_thres, classes=None,  max_det=max_det)
-        # Process predictions
-        for i, det in enumerate(pred):  # per image
-            seen += 1
-            p, im0= path[i], im0s[i].copy()
-            s += f'{i}: '
+app.config["SQLALCHEMY_DATABASE_URI"] = SQLITE
 
 
-            p = Path(p)  # to Path
-            s += '%gx%g ' % im.shape[2:]  # print string
-            imc = im0.copy() if save_crop else im0  # for save_crop
-            annotator = Annotator(im0, line_width=line_thickness, example=str(names))
-            if len(det):
-                # Rescale boxes from img_size to im0 size
-                det[:, :4] = scale_boxes(im.shape[2:], det[:, :4], im0.shape).round()
+login_manager = LoginManager()
+login_manager.init_app(app)
+db.init_app(app)
+app.app_context().push()
 
-                # Print results
-                for c in det[:, 5].unique():
-                    n = (det[:, 5] == c).sum()  # detections per class
-                    s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
-
-                # Write results
-                for *xyxy, conf, cls in reversed(det):
-                    if save_crop or view_img:  # Add bbox to image
-                        c = int(cls)  # integer class
-                        label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')
-                        annotator.box_label(xyxy, label, color=colors(c, True))
-                    if save_crop:
-                        save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
-            
-            # Stream results
-            im0 = annotator.result()
-                
-            image_bytes = cv2.imencode('.jpg', im0)[1].tobytes()
-            yield (b'--frame\r\n'
-                b'Content-Type: image/jpeg\r\n\r\n' + image_bytes + b'\r\n')  
+app.register_blueprint(index)
+app.register_blueprint(login)
+app.register_blueprint(register)
+app.register_blueprint(home)
 
 
-app.config["SECRET_KEY"] = 'secret'
 
-
-@app.route("/")
-@app.route("/home")
-def home():
-    return render_template("index.html")
-
-@app.route("/video_feed")
-def video_feed():
-    return Response(run(), mimetype="multipart/x-mixed-replace; boundary=frame")
+@login_manager.user_loader
+def load_user(user_id):
+    try:
+        return Users.query.get(int(user_id))
+    except (sqlalchemy.exc.OperationalError) as e:
+        return render_template("error.html", e="Database not found")
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=3000, debug=True)
+    ui.run()
+    # app.run(host="0.0.0.0", port=3000, debug=True)

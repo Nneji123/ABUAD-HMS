@@ -261,3 +261,5 @@ annotations/
 images/
 *.onnx
 *.pt
+*.db
+deepsort/
