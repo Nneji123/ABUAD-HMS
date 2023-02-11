@@ -262,4 +262,5 @@ images/
 *.onnx
 *.pt
 *.db
-deepsort/
+# deepsort/
+yolov5/

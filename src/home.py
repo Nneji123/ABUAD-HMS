@@ -22,7 +22,7 @@ login_manager.init_app(home)
 
 device = select_device("gpu" if torch.cuda.is_available() else "cpu")
 # load model
-model = yolov5.load("./yolov5s.onnx")
+model = yolov5.load("./models/yolov5s.onnx")
 # model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
 device = select_device("cpu")  # 0 for gpu, '' for cpu
 # initialize deepsort
