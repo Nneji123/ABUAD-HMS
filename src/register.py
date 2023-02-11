@@ -39,7 +39,6 @@ def show():
                 return redirect(url_for("login.show") + "?success=account-created")
         else:
             flash("Please fill in all fields!", "failure")
-
             return redirect(url_for("register.show") + "?error=missing-fields")
     else:
         return render_template("register_and_login.html")
