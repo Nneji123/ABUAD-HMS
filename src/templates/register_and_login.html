@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Smoking Detection Application</title>
+    <meta name="description" content="Breathe Easy with SmokeFree - The Future of Smoke Detection.">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+    <link href="{{ url_for('static',filename='google_fonts.css') }}" rel="stylesheet">
+</head>
+<body>
+	<div class="main">  	
+		<input type="checkbox" id="chk" aria-hidden="true">
+
+			<div class="signup">
+                <form method="POST" action="/register">
+					<label for="chk" aria-hidden="true">Sign up</label>
+					<input type="text" name="username" placeholder="User name" required="">
+					<input type="email" name="email" placeholder="Email" required="">
+					<input type="password" name="password" placeholder="Password" required="">
+					<button>Sign up</button>
+				</form>
+			</div>
+
+			<div class="login">
+                <form method="POST" action="/login">
+					<label for="chk" aria-hidden="true">Login</label>
+					<input type="email" name="email" placeholder="Email" required="">
+					<input type="password" name="password" placeholder="Password" required="">
+					<button>Login</button>
+				</form>
+				{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					<p class="label">{{ messages[0] }}</p>
+				{% endif %}
+				{% endwith %}
+			</div>
+	</div>
+</body>
+</html>
