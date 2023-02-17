@@ -26,7 +26,7 @@ included_files = [
 build_options = {
     "packages": ["flask", "flask_login", "sqlalchemy","dotenv", "onnxruntime", "onnx", "flaskwebgui", "yolov5", "cv2", "numpy", "torch", "torchvision", "PIL", "tqdm", "requests", "matplotlib", "seaborn", "thop", "gdown"],
     "includes": ["werkzeug"],
-    "excludes": ["tkinter", "pyside2","pyqt5"],
+    "excludes": ["tkinter", "pyside2"],
     "include_files": included_files,
 }
 

@@ -2,9 +2,11 @@ import os
 import sqlite3
 
 import sqlalchemy
+
 # from dotenv import load_dotenv
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 from flask_login import LoginManager
+
 # from webui import WebUI
 from flaskwebgui import FlaskUI
 from werkzeug.security import generate_password_hash
@@ -29,7 +31,9 @@ app = Flask(__name__, static_folder="./templates/static")
 #     icon_path="logo.ico",
 #     app_name="SmokeDetector",
 # )  # Add WebUI
-ui = FlaskUI(app=app,server="flask", port=5000, fullscreen=True, width=800, height=600) # Add WebUI
+ui = FlaskUI(
+    app=app, server="flask", port=5000, fullscreen=True, width=800, height=600
+)  # Add WebUI
 
 
 # SQLITE = os.getenv("SQLITE")
@@ -59,6 +63,14 @@ def load_user(user_id):
         return render_template("error.html", e="Database not found")
 
 
+@app.route("/favicon.ico")
+def favicon():
+    return send_from_directory(
+        os.path.join(app.root_path, "./templates/static"),
+        "favicon.ico",
+        mimetype="image/vnd.microsoft.icon",
+    )
+
 
 def create_new_user(username, email, password):
     conn = sqlite3.connect("database.db")
@@ -72,10 +84,15 @@ def create_new_user(username, email, password):
     conn.close()
     print("Database Executed Successfully!")
 
+
 def start():
-    db.create_all()
-    create_new_user("test", "test@gmail.com", "password")
-    create_new_user("test2", "test2@gmail.com", "password")
+    if not os.path.exists("./database.db"):
+        db.create_all()
+        create_new_user("test", "test@gmail.com", "password")
+        create_new_user("test2", "test2@gmail.com", "password")
+    else:
+        print("Database Exists with Current Users")
+
 
 
 if __name__ == "__main__":
