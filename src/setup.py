@@ -13,7 +13,6 @@ included_files = [
     ("deep_sort", "deep_sort"),
     ("frame", "frame"),
     ("app.py", "app.py"),
-    ("database.db", "database.db"),
     ("home.py", "home.py"),
     ("index.py", "index.py"),
     ("init.py", "init.py"),
@@ -22,7 +21,6 @@ included_files = [
     ("register.py", "register.py"),
     ("schema.py", "schema.py"),
     ("logo.ico", "logo.ico"),
-    (".env", ".env"),
 ]
 
 # Options for the build

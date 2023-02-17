@@ -30,6 +30,7 @@ def show():
 
                     db.session.add(new_user)
                     db.session.commit()
+                    flash("Account created successfully!", "success")
                 except sqlalchemy.exc.IntegrityError:
                     flash("User already exists!", "failure")
 
