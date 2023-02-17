@@ -259,7 +259,8 @@ dataset/
 annotations/
 .ipynb_checkpoints/
 images/
-*.onnx
+yolov5n.onnx
+yolov5s.onnx
 *.pt
 *.db
 # deepsort/

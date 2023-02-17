@@ -1,10 +1,12 @@
 import os
 
 import sqlalchemy
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from flask import Flask, render_template
 from flask_login import LoginManager
 from webui import WebUI
+from flaskwebgui import FlaskUI
+
 
 from home import home
 from index import index
@@ -13,27 +15,27 @@ from logout import logout
 from register import register
 from schema import Users, db
 
-load_dotenv()
+# load_dotenv()
 
 
 app = Flask(__name__, static_folder="./templates/static")
-ui = WebUI(
-    app,
-    url="127.0.0.1",
-    port=3000,
-    debug=False,
-    using_win32=True,
-    icon_path="logo.ico",
-    app_name="SmokeDetector",
-)  # Add WebUI
-# ui = FlaskUI(app, width=800, height=600) # Add WebUI
+# ui = WebUI(
+#     app,
+#     url="127.0.0.1",
+#     port=3000,
+#     debug=True,
+#     using_win32=True,
+#     icon_path="logo.ico",
+#     app_name="SmokeDetector",
+# )  # Add WebUI
+ui = FlaskUI(app=app,server="flask", port=5000, fullscreen=True, width=800, height=600) # Add WebUI
 
 
-SQLITE = os.getenv("SQLITE")
+# SQLITE = os.getenv("SQLITE")
 
-app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
-
-app.config["SQLALCHEMY_DATABASE_URI"] = SQLITE
+app.config["SECRET_KEY"] = "secret"
+app.config.from_object(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///../database.db"
 
 
 login_manager = LoginManager()
@@ -57,5 +59,7 @@ def load_user(user_id):
 
 
 if __name__ == "__main__":
+    db.drop_all()
+    db.create_all()
     ui.run()
     # app.run(host="0.0.0.0", port=3000, debug=True)

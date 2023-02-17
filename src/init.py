@@ -22,7 +22,7 @@ def create_new_user(username, email, password):
 def main():
     db.create_all()
     create_new_user("test", "test@gmail.com", "password")
-    create_new_user("test2", "test2@gmail.com", "password")
+    create_new_user("test", "test@gmail.com", "password")
 
 
 if __name__ == "__main__":

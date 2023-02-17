@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
 body{
 	margin: 0;
 	padding: 0;
@@ -34,6 +36,7 @@ label{
 	font-weight: bold;
 	cursor: pointer;
 	transition: .5s ease-in-out;
+	font-family: 'Montserrat', sans-serif;
 }
 input{
 	width: 60%;
@@ -87,4 +90,14 @@ button:hover{
 }
 #chk:checked ~ .signup label{
 	transform: scale(.6);
+}
+p{
+	color: #fff;
+	font-size: 0.7em;
+	justify-content: center;
+	display: flex;
+	margin: 20px;
+	font-weight: bold;
+	transition: .5s ease-in-out;
+	font-family: 'Montserrat', sans-serif;
 }

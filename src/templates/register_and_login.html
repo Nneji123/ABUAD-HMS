@@ -19,6 +19,11 @@
 					<input type="password" name="password" placeholder="Password" required="">
 					<button>Sign up</button>
 				</form>
+				{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					<p class="label">{{ messages[0] }}</p>
+				{% endif %}
+				{% endwith %}
 			</div>
 
 			<div class="login">
@@ -28,11 +33,6 @@
 					<input type="password" name="password" placeholder="Password" required="">
 					<button>Login</button>
 				</form>
-				{% with messages = get_flashed_messages() %}
-				{% if messages %}
-					<p class="label">{{ messages[0] }}</p>
-				{% endif %}
-				{% endwith %}
 			</div>
 	</div>
 </body>

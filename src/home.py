@@ -1,11 +1,6 @@
-import os
-import sys
-from pathlib import Path
-
 import cv2
-import sqlalchemy
 import torch
-from flask import Blueprint, Response, redirect, render_template, request, url_for
+from flask import Blueprint, Response, render_template
 from flask_login import LoginManager
 
 import yolov5
@@ -13,7 +8,7 @@ from deep_sort.deep_sort import DeepSort
 from deep_sort.utils.parser import get_config
 from yolov5.utils.general import xyxy2xywh
 from yolov5.utils.plots import Annotator, colors
-from yolov5.utils.torch_utils import select_device, time_sync
+from yolov5.utils.torch_utils import select_device
 
 home = Blueprint("home", __name__, template_folder="./templates")
 login_manager = LoginManager()
@@ -23,7 +18,6 @@ login_manager.init_app(home)
 device = select_device("gpu" if torch.cuda.is_available() else "cpu")
 # load model
 model = yolov5.load("./models/yolov5n.onnx")
-# model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
 device = select_device("cpu")  # 0 for gpu, '' for cpu
 # initialize deepsort
 cfg = get_config()
@@ -55,8 +49,17 @@ def stream():
         # frame = frame.cpu().numpy()
 
         frame = cv2.resize(frame, (640, 640))
-
+        lst = []
         results = model(frame, augment=True)
+        df = results.pandas().xyxy[0]
+        print(df)
+        for i in df['name']:
+            lst.append(i)
+            if 'person' in lst:
+                print("This person was caught smoking")
+                cv2.imwrite("./frame/file.jpg", frame)
+            else:
+                print("No smoking")
         # proccess
         annotator = Annotator(frame, line_width=2, pil=not ascii)
         det = results.pred[0]

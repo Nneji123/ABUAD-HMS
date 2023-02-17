@@ -1,9 +1,34 @@
+'''
+This script is used to split the dataset into train, val and test sets.
+
+'''
+
 import os
 import shutil
 import numpy as np
 from sklearn.model_selection import train_test_split
 
 def divide_dataset(images_dir, annotations_dir, train_dir, val_dir, test_dir, test_size=0.2, val_size=0.2):
+    """
+    The divide_dataset function divides the dataset into train, val, and test sets.
+    The function takes in a directory of images and a directory of annotations as inputs.
+    It returns three directories: train_dir, val_dir, and test_dir. 
+    train_dir contains the training set (images + annotations). 
+    val_dir contains the validation set (images + annotations). 
+    test_dir contains the testing set (images + annotations).
+
+    Args:
+        images_dir: Specify the directory where the images are stored
+        annotations_dir: Specify the path to the directory containing all of the annotations for our dataset
+        train_dir: Specify the path to the directory where you want to save your training data
+        val_dir: Specify a directory where validation images and labels are stored
+        test_dir: Specify where the test images are
+        test_size: Split the data into a train and test set
+        val_size: Set the size of the validation dataset (20% in this case)
+
+    Returns:
+        The train, val and test directories
+    """
     image_filenames = [filename for filename in os.listdir(images_dir) if filename.endswith(".jpg")]
     image_filenames = np.array(image_filenames)
     
@@ -41,10 +66,11 @@ def divide_dataset(images_dir, annotations_dir, train_dir, val_dir, test_dir, te
         shutil.copy(os.path.join(annotations_dir, annotation_filename), os.path.join(test_dir, "labels", annotation_filename))
 
 
-images_dir = "./images"
-annotations_dir = "./annotations"
-train_dir = "./dataset/train"
-val_dir = "./dataset/val"
-test_dir = "./dataset/test"
-divide_dataset(images_dir, annotations_dir, train_dir, val_dir, test_dir)
-print("Dataset Has been split successfully")
+if __name__=="__main__":
+    images_dir = "../images"
+    annotations_dir = "../annotations"
+    train_dir = "../dataset/train"
+    val_dir = "../dataset/val"
+    test_dir = "../dataset/test"
+    divide_dataset(images_dir, annotations_dir, train_dir, val_dir, test_dir)
+    print("Dataset Has been split successfully")
