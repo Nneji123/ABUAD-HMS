@@ -265,3 +265,4 @@ yolov5s.onnx
 *.db
 # deepsort/
 yolov5/
+*.iss

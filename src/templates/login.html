@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>ABUAD HMS</title>
+	<link rel="icon" type="image/ico" href="{{ url_for('static',filename='img/logo.png') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}" />
+
+	<script src="https://kit.fontawesome.com/5285e374b0.js" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<link rel="stylesheet"
+		href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
+
+
+	<section class="h-100 gradient-form" style="background-image:
+      url('https://portal.abuad.edu.ng/admin/images/index.jpg');">
+		<div class="container py-5 h-100">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-xl-10">
+					<div class="card rounded-3 text-black">
+						<div class="row g-0">
+							<div class="col-lg-6">
+								<div class="card-body p-md-5 mx-md-4">
+
+									<div class="text-center">
+										<img src="{{ url_for('static', filename='logo.png')
+                        }}" alt="ABUAD LMS Logo" style="width: 70px;" style="font-family: 'Poppins', sans-serif;">
+										<h4 class="mt-1 mb-5 pb-1">Welcome to ABUAD HMS</h4>
+									</div>
+
+									<form method="POST" action="/login">
+										<p>Only admins are allowed to use ABUAD HMS!</p>
+
+										<div class="form-outline mb-4">
+											<input type="username" id="form2Example11" class="form-control"
+												placeholder="username" name="email" />
+											<label class="form-label" for="form2Example11" style="font-family: 'Poppins', sans-serif;">Admin Email</label>
+										</div>
+
+										<div class="form-outline mb-4">
+											<input type="password" id="form2Example22" class="form-control"
+												name="password" />
+											<label class="form-label" for="form2Example22" style="font-family: 'Poppins', sans-serif;">Admin Password</label>
+										</div>
+
+										<div class="text-center">
+											<div class="form-check form-check-inline">
+											</div>
+											<div class="form-check form-check-inline">
+											</div>
+											<div class="form-check form-check-inline">
+											</div>
+										</div>
+
+										{% for message in get_flashed_messages() %}
+										<div class="alert alert-danger">{{ message }}</div>
+										{% endfor %}
+										{% block content %}{% endblock %}
+
+										<div class="text-center pt-1 mb-5 pb-1">
+											<input class="btn btn-primary btn-block fa-lg
+                          gradient-custom-2 mb-3" type="submit" value="LOGIN" style="font-family: 'Poppins', sans-serif;"></input>
+											<!-- <a class="text-muted" href="/reset_password" style="font-family: 'Poppins', sans-serif;">Forgot password?</a> -->
+										</div>
+									</form>
+
+								</div>
+							</div>
+							<div class="col-lg-6 d-flex align-items-center gradient-custom-2" style="height: 100%;">
+								<div class="text-white px-3 py-4 p-md-5 mx-md-4">
+									<div>
+										<p>
+											The ABUAD hostel monitoring system is an innovative application that helps
+											to detect and prevent violence and smoking in the hostel environments of Afe
+											Babalola University, Ado-Ekiti (ABUAD). The system provides a range of
+											features to support the safety and well-being of students, faculty, and
+											staff at the university.
+										</p>
+										<p>
+											Some of the key features of the ABUAD hostel monitoring system include:
+										</p>
+										<ul>
+											<li>Automated detection of violent behavior through audio and video
+												analysis.</li>
+											<li>Real-time monitoring of smoking in hostel rooms through smoke detectors
+												and video analysis.</li>
+											<li>Detailed reporting and analytics on hostel activity and incidents.</li>
+										</ul>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Section: Design Block -->

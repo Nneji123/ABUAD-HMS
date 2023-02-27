@@ -1,25 +1,164 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+
 <head>
-	<title>Smoking Detection Application</title>
-  <link rel="icon" type="image/png" href="{{ url_for('static',filename='logo.png') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1,
+      shrink-to-fit=no">
+  <title>ABUAD HMS</title>
+  <link rel="icon" type="image/ico" href="{{ url_for('static',filename='logo.png') }}" />
+  <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/5285e374b0.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='index.css') }}">
-    <link href="{{ url_for('static',filename='google_fonts.css') }}" rel="stylesheet">
-  </head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet"
+    href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
+
+  <style>
+    .gradient-custom-2 {
+      /* fallback for old browsers */
+      background: #fccb90;
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      background: linear-gradient(to right, #9d24ee, #d836c2, #dd36ab, #b44593);
+    }
+
+    .navbar-brand img {
+      height: 50px;
+      width: auto;
+    }
+
+    .invisible {
+      visibility: hidden;
+    }
+
+    .btn-link {
+      color: #fff;
+    }
+
+      /* set navbar background color */
+  .navbar {
+    background: #fccb90; /* fallback for older browsers */
+    background: linear-gradient(to right, #9d24ee, #d836c2, #dd36ab, #b44593);
+  }
+
+  /* set navigation links to white */
+  .navbar-nav .nav-link {
+    color: #fff !important;
+  }
+
+  /* set logout button text color to black */
+  .btn-primary {
+    color: #000 !important;
+  }
+
+  /* set logout button background color to white */
+  .btn-primary {
+    background-color: #fff !important;
+    border-color: #fff !important;
+  }
+  </style>
+</head>
+
 <body>
-  <label for="chk" aria-hidden="true">Smoking Detection</label>
-	<div class="main">  	
-		<input type="checkbox" id="chk" aria-hidden="true">
 
-			<div class="signup">
 
-          
-        <img src="{{ url_for('home.video_feed') }}" />
-			</div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light gradient-custom-2">
+  <!-- Container wrapper -->
+  <div class="container">
+    <!-- Navbar brand -->
+    <a class="navbar-brand me-2" href="https://mdbgo.com/">
+      <img src="{{ url_for('static',filename='logo.png') }}" height="16" alt="ABUAD Logo"
+          loading="lazy" style="margin-top: -1px;" />
+    </a>
 
-        <button class="label" href="/logout">Logout</button>
-	</div>
-</body>
-</html>
+    <!-- Toggle button -->
+    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarButtonsExample"
+      aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
 
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse justify-content-center" id="navbarButtonsExample">
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/admin" style="font-family: 'Poppins', sans-serif;">Admin Console</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/monitor" style="font-family: 'Poppins', sans-serif;">Monitor Console</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/view_offenders" style="font-family: 'Poppins', sans-serif;">View Offenders</a>
+        </li>
+      </ul>
+      <!-- Left links -->
+
+      <div class="d-flex align-items-center">
+        <a href="/logout">
+          <button type="button" class="btn btn-primary me-3" style="font-family: 'Poppins', sans-serif;">Logout</button>
+      </a>
+      </div>
+    </div>
+    <!-- Collapsible wrapper -->
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+
+
+
+
+  <!-- Main Content -->
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-md-12 mt-5">
+        <h3 style="font-family: 'Poppins', sans-serif;">What is ABUAD Hostel Monitoring System?</h3>
+        <p style="font-family: 'Poppins', sans-serif;">The ABUAD Hostel Monitoring System is an innovative application that helps to detect and prevent violence and
+          smoking in the hostel environments of Afe Babalola University, Ado-Ekiti (ABUAD). The system provides a range
+          of features to support the safety and well-being of students, faculty, and staff at the university.</p>
+      </div>
+    </div>
+    <!-- Features -->
+    <div class="row my-5">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title" style="font-family: 'Poppins', sans-serif;">Automated Detection of Violence</h5>
+            <p class="card-text" style="font-family: 'Poppins', sans-serif;">The ABUAD Hostel Monitoring System uses audio and video analysis to automatically
+              detect violent behavior in the hostel environment, enabling early intervention to prevent incidents and
+              ensure the safety of all occupants.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title" style="font-family: 'Poppins', sans-serif;">Real-time Monitoring of Smoking</h5>
+            <p class="card-text" style="font-family: 'Poppins', sans-serif;">The ABUAD Hostel Monitoring System monitors smoking in hostel rooms in real-time using
+              smoke detectors and video analysis, helping to enforce the university's no-smoking policy and create a
+              healthier living environment for all occupants.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title" style="font-family: 'Poppins', sans-serif;">Detailed Reporting and Analytics</h5>
+            <p class="card-text" style="font-family: 'Poppins', sans-serif;">The ABUAD Hostel Monitoring System provides detailed reporting and analytics on hostel
+              activity and incidents, allowing university administrators to identify trends and take proactive measures
+              to prevent future incidents.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- CTA -->
+  <div class="row my-5">
+    <div class="col-md-12 text-center">
+      <a href="#" class="btn btn-primary btn-lg" style="font-family: 'Poppins', sans-serif;">Learn More</a>
+    </div>
+  </div>
+
+  </div>

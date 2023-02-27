@@ -104,3 +104,27 @@ def show():
 @home.route("/video_feed")
 def video_feed():
     return Response(stream(), mimetype="multipart/x-mixed-replace; boundary=frame")
+
+@home.route("/monitor")
+def monitor():
+    return render_template("monitor.html")
+
+import os
+
+def get_image_files(directory):
+    """
+    Returns a list of all image files (jpg, jpeg, png, gif) in the given directory.
+    """
+    image_extensions = ['.jpg', '.jpeg', '.png', '.gif']
+    image_files = []
+    for file in os.listdir(directory):
+        if os.path.splitext(file)[1].lower() in image_extensions:
+            image_files.append(os.path.join('static/offenders', file))
+    return image_files
+
+
+@home.route("/view_offenders")
+def view_offenders():
+    images = get_image_files("./templates/static/offenders/")
+    print(images)
+    return render_template("view_offenders.html", images = images)

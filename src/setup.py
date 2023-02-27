@@ -14,6 +14,7 @@ included_files = [
     ("frame", "frame"),
     ("app.py", "app.py"),
     ("home.py", "home.py"),
+    ("init.py", "init.py"),
     ("index.py", "index.py"),
     ("login.py", "login.py"),
     ("logout.py", "logout.py"),
@@ -25,7 +26,7 @@ included_files = [
 # Options for the build
 build_options = {
     "packages": ["flask", "flask_login", "sqlalchemy","dotenv", "onnxruntime", "onnx", "flaskwebgui", "yolov5", "cv2", "numpy", "torch", "torchvision", "PIL", "tqdm", "requests", "matplotlib", "seaborn", "thop", "gdown"],
-    "includes": ["werkzeug"],
+    "includes": ["werkzeug", "sqlite3"],
     "excludes": ["tkinter", "pyside2"],
     "include_files": included_files,
 }
@@ -36,5 +37,5 @@ setup(
     version="1.0",
     description="YOLOv5 Object Detection Flask App",
     options={"build_exe": build_options},
-    executables=[Executable("app.py", icon="logo.ico")],
+    executables=[Executable(script="init.py"), Executable(script="app.py", icon="logo.ico",)],
 )

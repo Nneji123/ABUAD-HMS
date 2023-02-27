@@ -42,4 +42,4 @@ def show():
             flash("Please fill in all fields!", "failure")
             return redirect(url_for("register.show") + "?error=missing-fields")
     else:
-        return render_template("register_and_login.html")
+        return render_template("login.html")

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ABUAD HMS - Student Monitoring</title>
+    <!-- CSS and JS links go here -->
+    <link rel="icon" type="image/ico" href="{{ url_for('static',filename='logo.png') }}" />
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}" /> -->
+
+    <script src="https://kit.fontawesome.com/5285e374b0.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet"
+        href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
+</head>
+
+<style>
+    .gradient-custom-2 {
+      /* fallback for old browsers */
+      background: #fccb90;
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      background: linear-gradient(to right, #9d24ee, #d836c2, #dd36ab, #b44593);
+    }
+
+    .navbar-brand img {
+      height: 50px;
+      width: auto;
+    }
+
+    .invisible {
+      visibility: hidden;
+    }
+
+    .btn-link {
+      color: #fff;
+    }
+  </style>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light gradient-custom-2">
+        <div class="container">
+            <a class="navbar-brand me-2" href="#">
+                <img src="{{ url_for('static',filename='logo.png') }}" height="16" alt="ABUAD Logo" loading="lazy"
+                    style="margin-top: -1px;" />
+            </a>
+
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#navbarButtonsExample" aria-controls="navbarButtonsExample" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarButtonsExample">
+                <!-- Left links -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin" style="font-family: 'Poppins', sans-serif;">Admin Console</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/view_offenders" style="font-family: 'Poppins', sans-serif;">View Offenders</a>
+                    </li>
+                </ul>
+
+                <div class="d-flex align-items-center">
+                    <a href="/logout">
+                        <button type="button" class="btn btn-primary me-3" style="font-family: 'Poppins', sans-serif;">Logout</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" style="font-family: 'Poppins', sans-serif;">Smoking Detection</h5>
+                        <video src="{{ url_for('static',filename='test.mp4') }}" width="100%" controls></video>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" style="font-family: 'Poppins', sans-serif;">Violence Detection</h5>
+                        <video src="{{ url_for('static',filename='test.mp4') }}" width="100%" controls></video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

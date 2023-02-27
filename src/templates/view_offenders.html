@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ABUAD HMS - View Offenders</title>
+    <!-- CSS and JS links go here -->
+    <link rel="icon" type="image/ico" href="{{ url_for('static',filename='logo.png') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet"
+        href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/modules/06d3aecc98edbb4cb9566d03d551bbb6.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet"
+        href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+</head>
+
+<style>
+    .gradient-custom-2 {
+      /* fallback for old browsers */
+      background: #fccb90;
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      background: linear-gradient(to right, #9d24ee, #d836c2, #dd36ab, #b44593);
+    }
+
+    .navbar-brand img {
+      height: 50px;
+      width: auto;
+    }
+
+    .invisible {
+      visibility: hidden;
+    }
+
+    .btn-link {
+      color: #fff;
+    }
+  </style>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light gradient-custom-2">
+        <div class="container">
+            <a class="navbar-brand me-2" href="#">
+                <img src="{{ url_for('static',filename='logo.png') }}" height="16" alt="ABUAD Logo" loading="lazy"
+                    style="margin-top: -1px;" />
+            </a>
+
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                data-mdb-target="#navbarButtonsExample" aria-controls="navbarButtonsExample" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarButtonsExample">
+                <!-- Left links -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin" style="font-family: 'Poppins', sans-serif;">Admin Console</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/monitor" style="font-family: 'Poppins', sans-serif;">Monitor Console</a>
+                    </li>
+                </ul>
+
+                <div class="d-flex align-items-center">
+                    <a href="/logout">
+                        <button type="button" class="btn btn-primary me-3" style="font-family: 'Poppins', sans-serif;">Logout</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h4 class="my-5" style="font-family: 'Poppins', sans-serif;">View Offenders</h4>
+        <!-- Carousel wrapper -->
+        <div id="carouselMaterialStyle" class="carousel slide carousel-fade" data-mdb-ride="carousel">
+            <!-- Inner -->
+            <div class="carousel-inner rounded-5 shadow-4-strong">
+                <!-- Single item -->
+                {% for image in images %}
+                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                    <img src="{{ image }}" class="d-block w-100" alt="Offender Image">
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Inner -->
+
+            <!-- Controls -->
+            <button class="carousel-control-prev" type="button" data-mdb-target="#carouselMaterialStyle"
+                data-mdb-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span  style="font-family: 'Poppins', sans-serif;">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-mdb-target="#carouselMaterialStyle"
+                data-mdb-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span  style="font-family: 'Poppins', sans-serif;">Next</span>
+            </button>
+        </div>
+
+        <!-- Carousel wrapper -->
+        <!-- Add more image cards here as needed -->
+    </div>
+    <!-- Page content -->
+    </main>
+    <!-- Main content -->
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+    <!-- MDB JS -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js"></script>
+    <script>
+        // var myCarousel = document.querySelector('#carouselExampleControls')
+        // var carousel = new bootstrap.Carousel(myCarousel, {
+        //     interval: 2000,
+        //     wrap: true
+        // })
+    </script>
+</body>
+
+</html>
