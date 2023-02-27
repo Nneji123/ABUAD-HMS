@@ -1,46 +1,37 @@
 import os
-import sqlite3
 
 import sqlalchemy
 
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from flask import Flask, render_template, send_from_directory
+from flask_admin import Admin
 from flask_login import LoginManager
 
-# from webui import WebUI
 from flaskwebgui import FlaskUI
-from werkzeug.security import generate_password_hash
 
+
+from config import configs
 from home import home
 from index import index
 from login import login
-from logout import logout
-from register import register
-from schema import Users, db
+from logout import logout, CustomIndexView
+from schema import Admins, AdminsView, db
 
-# load_dotenv()
+
+load_dotenv()
 
 
 app = Flask(__name__, static_folder="./templates/static")
-# ui = WebUI(
-#     app,
-#     url="127.0.0.1",
-#     port=3000,
-#     debug=True,
-#     using_win32=True,
-#     icon_path="logo.ico",
-#     app_name="SmokeDetector",
-# )  # Add WebUI
 ui = FlaskUI(
     app=app, server="flask", port=5000, fullscreen=True, width=800, height=600
-)  # Add WebUI
+)
 
-
-# SQLITE = os.getenv("SQLITE")
-
-app.config["SECRET_KEY"] = "secret"
-app.config.from_object(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///../database.db"
+SERVER_MODE = os.getenv("SERVER_MODE")
+if SERVER_MODE in configs:
+    app.config.update(configs[SERVER_MODE])
+    app.config.from_object(__name__)
+else:
+    raise ValueError(f"Unknown server mode: {SERVER_MODE}")
 
 
 login_manager = LoginManager()
@@ -50,15 +41,19 @@ app.app_context().push()
 
 app.register_blueprint(index)
 app.register_blueprint(login)
-app.register_blueprint(register)
 app.register_blueprint(home)
 app.register_blueprint(logout)
+
+admin = Admin(
+    app, name="ABUAD", template_mode="bootstrap4", index_view=CustomIndexView()
+)
+admin.add_view(AdminsView(Admins, db.session))
 
 
 @login_manager.user_loader
 def load_user(user_id):
     try:
-        return Users.query.get(int(user_id))
+        return Admins.query.get(int(user_id))
     except (sqlalchemy.exc.OperationalError) as e:
         return render_template("error.html", e="Database not found")
 
@@ -72,9 +67,8 @@ def favicon():
     )
 
 
-
-
 if __name__ == "__main__":
-    # start()
     # ui.run()
-    app.run(host="0.0.0.0", port=3000, debug=True)
+    app.run(
+        host="0.0.0.0", port=3000, debug=configs[SERVER_MODE]["DEBUG"], threaded=True
+    )

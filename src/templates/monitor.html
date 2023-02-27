@@ -13,31 +13,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet"
         href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='main.css') }}" />
+
 </head>
-
-<style>
-    .gradient-custom-2 {
-      /* fallback for old browsers */
-      background: #fccb90;
-      /* Chrome 10-25, Safari 5.1-6 */
-      background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
-      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-      background: linear-gradient(to right, #9d24ee, #d836c2, #dd36ab, #b44593);
-    }
-
-    .navbar-brand img {
-      height: 50px;
-      width: auto;
-    }
-
-    .invisible {
-      visibility: hidden;
-    }
-
-    .btn-link {
-      color: #fff;
-    }
-  </style>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light gradient-custom-2">
@@ -80,7 +58,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title" style="font-family: 'Poppins', sans-serif;">Smoking Detection</h5>
-                        <video src="{{ url_for('static',filename='test.mp4') }}" width="100%" controls></video>
+                        <img src="/smoking_feed" width="500" height="360" alt="Smoking Detection" ></img>
                     </div>
                 </div>
             </div>
@@ -88,7 +66,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title" style="font-family: 'Poppins', sans-serif;">Violence Detection</h5>
-                        <video src="{{ url_for('static',filename='test.mp4') }}" width="100%" controls></video>
+                        <video src="{{ url_for('static',filename='test.mp4') }}" height="250" controls></video>
                     </div>
                 </div>
             </div>

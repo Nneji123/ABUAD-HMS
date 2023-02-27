@@ -35,8 +35,8 @@
 
 										<div class="form-outline mb-4">
 											<input type="username" id="form2Example11" class="form-control"
-												placeholder="username" name="email" />
-											<label class="form-label" for="form2Example11" style="font-family: 'Poppins', sans-serif;">Admin Email</label>
+												placeholder="username" name="username" />
+											<label class="form-label" for="form2Example11" style="font-family: 'Poppins', sans-serif;">Admin Username</label>
 										</div>
 
 										<div class="form-outline mb-4">
@@ -54,9 +54,15 @@
 											</div>
 										</div>
 
-										{% for message in get_flashed_messages() %}
-										<div class="alert alert-danger">{{ message }}</div>
+										{% with messages = get_flashed_messages(with_categories=true) %}
+										{% if messages %}
+										{% for category, message in messages %}
+										<div class="alert alert-{{category}}" role="alert">
+											{{ message }}
+										</div>
 										{% endfor %}
+										{% endif %}
+										{% endwith %}
 										{% block content %}{% endblock %}
 
 										<div class="text-center pt-1 mb-5 pb-1">

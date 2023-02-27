@@ -1,0 +1,108 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+{{ super() }}
+<div class="row">
+    <!-- Main Content -->
+    <!-- <div class="container my-5"> -->
+      <!-- <div class="row"> -->
+        <div class="col-md-12 mt-5">
+          <h3>ABUAD HMS Admin Application</h3>
+          <p>The ABUAD HMS Admin Application is an innovative tool that enables administrators to manage students and lecturers in the hostel monitoring system of Afe Babalola University, Ado-Ekiti (ABUAD). The system provides a range of features to support the efficient management of the university community.</p>
+        </div>
+      </div>
+      <!-- Features -->
+      <div class="row my-5">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Create and Update Students and Lecturers</h5>
+              <p class="card-text">The ABUAD HMS Admin Application allows administrators to create new student and lecturer profiles, as well as update existing ones with new information as needed.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Read and View Student and Lecturer Profiles</h5>
+              <p class="card-text">The ABUAD HMS Admin Application enables administrators to access and view the profiles of all students and lecturers in the hostel monitoring system, providing a comprehensive overview of the university community.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Delete Student and Lecturer Profiles</h5>
+              <p class="card-text">The ABUAD HMS Admin Application allows administrators to delete student and lecturer profiles as needed, ensuring that the system is up-to-date and accurate at all times.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock body %}
+{% block extra_head %}
+{{ super()}}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+{% endblock %}
+
+{% block access_control %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+<ul class="nav navbar-nav navbar-right">
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+  <li>
+      {% if current_user.is_authenticated %}
+      <a href="{{url_for('home.show')}}">
+          <button type="button" class="btn btn-primary me-3" style="font-family: 'Poppins', sans-serif;">Back Home</button>
+      </a>        
+      {% endif %}
+  </li>
+  <li>
+      {% if current_user.is_authenticated %}
+      <a href="{{url_for('admin.logout')}}">
+          <button type="button" class="btn btn-primary me-3" style="font-family: 'Poppins', sans-serif; margin-left: 10px;">Logout</button>
+      </a>        
+      {% endif %}
+  </li>
+</ul>
+{% endblock %}
+</div>
+</nav>
+
+{% block head %}
+{{ super() }}
+
+<style>
+    .navbar-brand img {
+        height: 30px;
+        width: auto;
+    }
+
+    .gradient-custom-2 {
+        /* fallback for old browsers */
+        background: #fccb90;
+
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(to right, #9d24ee, #d836c2, #dd36ab, #b44593);
+    }
+</style>
+{% endblock %}
+
+{% block brand %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+
+<a class="navbar-brand" href="/home">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="ABUAD LMS Logo">
+</a>
+{% endblock %}
+{% block head_css %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='admin.css') }}" />
+{% endblock %}
+

@@ -13,52 +13,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet"
     href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='main.css') }}" />
 
-  <style>
-    .gradient-custom-2 {
-      /* fallback for old browsers */
-      background: #fccb90;
-      /* Chrome 10-25, Safari 5.1-6 */
-      background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
-      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-      background: linear-gradient(to right, #9d24ee, #d836c2, #dd36ab, #b44593);
-    }
-
-    .navbar-brand img {
-      height: 50px;
-      width: auto;
-    }
-
-    .invisible {
-      visibility: hidden;
-    }
-
-    .btn-link {
-      color: #fff;
-    }
-
-      /* set navbar background color */
-  .navbar {
-    background: #fccb90; /* fallback for older browsers */
-    background: linear-gradient(to right, #9d24ee, #d836c2, #dd36ab, #b44593);
-  }
-
-  /* set navigation links to white */
-  .navbar-nav .nav-link {
-    color: #fff !important;
-  }
-
-  /* set logout button text color to black */
-  .btn-primary {
-    color: #000 !important;
-  }
-
-  /* set logout button background color to white */
-  .btn-primary {
-    background-color: #fff !important;
-    border-color: #fff !important;
-  }
-  </style>
 </head>
 
 <body>
@@ -69,7 +25,7 @@
   <!-- Container wrapper -->
   <div class="container">
     <!-- Navbar brand -->
-    <a class="navbar-brand me-2" href="https://mdbgo.com/">
+    <a class="navbar-brand me-2" href="#">
       <img src="{{ url_for('static',filename='logo.png') }}" height="16" alt="ABUAD Logo"
           loading="lazy" style="margin-top: -1px;" />
     </a>
