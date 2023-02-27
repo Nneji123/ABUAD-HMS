@@ -1,4 +1,8 @@
+import time
+
 import cv2
+import numpy as np
+import onnxruntime as rt
 import torch
 
 import yolov5
@@ -7,6 +11,20 @@ from deep_sort.utils.parser import get_config
 from yolov5.utils.general import xyxy2xywh
 from yolov5.utils.plots import Annotator, colors
 from yolov5.utils.torch_utils import select_device
+
+
+
+# ONNX Initializations
+output_path = "./models/violence.onnx"
+providers = ["CPUExecutionProvider"]
+m = rt.InferenceSession(output_path, providers=providers)
+
+# Image Preprocessing Variables
+SEQUENCE_LENGTH = 16
+IMAGE_HEIGHT = 64
+IMAGE_WIDTH = 64
+CLASSES_LIST = ["NonViolence", "Violence"]
+
 
 
 device = select_device("gpu" if torch.cuda.is_available() else "cpu")
@@ -81,3 +99,55 @@ def smoking_stream():
         yield (
             b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + image_bytes + b"\r\n"
         )
+
+
+def violence_stream():
+    # cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    while True:
+        frames_list = []
+        for frame_counter in range(SEQUENCE_LENGTH):
+            success, frame = cap.read()
+            if not success:
+                break
+            resized_frame = cv2.resize(frame, (IMAGE_HEIGHT, IMAGE_WIDTH))
+            normalized_frame = resized_frame / 255
+            frames_list.append(normalized_frame)
+        if len(frames_list) < SEQUENCE_LENGTH:
+            break
+        input_tensor = np.array(frames_list).reshape(
+            1, SEQUENCE_LENGTH, IMAGE_HEIGHT, IMAGE_WIDTH, 3
+        )
+        input_tensor = input_tensor.astype(np.float32)
+        onnx_pred = m.run(["dense_4"], {"input": input_tensor})
+        predicted_labels_probabilities = onnx_pred[0][0]
+        predicted_label = np.argmax(predicted_labels_probabilities)
+        predicted_class_name = CLASSES_LIST[predicted_label]
+        if predicted_class_name == "Violence":
+            image_name = "violence_detected_" + str(int(time.time())) + ".jpg"
+            text = "Violence Detected!"
+        else:
+            text = ""
+        text_size = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 1.2, 2)[0]
+        text_x = int((frame.shape[1] - text_size[0]) / 2)
+        text_y = int((frame.shape[0] + text_size[1]) / 2)
+        cv2.putText(
+            frame,
+            text,
+            (text_x, text_y),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1,
+            (255, 255, 255),
+            2,
+        )
+        ret, buffer = cv2.imencode(".jpg", frame)
+        new_frame = buffer.tobytes()
+        yield (
+            b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + new_frame + b"\r\n"
+        )
+        key = cv2.waitKey(20)
+        if key == 27:
+            break
+    cap.release()

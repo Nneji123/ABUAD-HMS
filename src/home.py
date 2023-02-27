@@ -3,7 +3,7 @@ import os
 from flask import Blueprint, Response, render_template
 from flask_login import LoginManager, login_required
 
-from utils import smoking_stream
+from utils import smoking_stream, violence_stream
 
 
 home = Blueprint("home", __name__, template_folder="./templates")
@@ -22,6 +22,11 @@ def show():
 def smoking_feed():
     return Response(smoking_stream(), mimetype="multipart/x-mixed-replace; boundary=frame")
 
+@login_required
+@home.route("/violence_feed")
+def violence_feed():
+    return Response(violence_stream(), mimetype="multipart/x-mixed-replace; boundary=frame")
+
 
 @login_required
 @home.route("/monitor")
@@ -39,6 +44,8 @@ def get_image_files(directory):
         if os.path.splitext(file)[1].lower() in image_extensions:
             image_files.append(os.path.join('static/offenders', file))
     return image_files
+
+
 
 
 @login_required
