@@ -33,9 +33,9 @@ build_options = {
 
 # Setup function
 setup(
-    name="SmokeDetector",
+    name="ABUAD-HMS",
     version="1.0",
-    description="YOLOv5 Object Detection Flask App",
+    description="ABUAD Hostel Monitoring System Application",
     options={"build_exe": build_options},
     executables=[Executable(script="init.py"), Executable(script="app.py", icon="logo.ico",)],
 )

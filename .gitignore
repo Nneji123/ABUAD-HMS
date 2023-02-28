@@ -259,3 +259,4 @@ yolov5s.onnx
 # deepsort/
 yolov5/
 *.iss
+testing/
