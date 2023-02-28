@@ -11,21 +11,22 @@ included_files = [
     ("templates", "templates"),
     ("models", "models"),
     ("deep_sort", "deep_sort"),
-    ("frame", "frame"),
     ("app.py", "app.py"),
+    ("config.py", "config.py"),
+    (".env",".env"),
     ("home.py", "home.py"),
     ("init.py", "init.py"),
     ("index.py", "index.py"),
+    ("utils.py", "utils.py"),
     ("login.py", "login.py"),
     ("logout.py", "logout.py"),
-    ("register.py", "register.py"),
     ("schema.py", "schema.py"),
     ("logo.ico", "logo.ico"),
 ]
 
 # Options for the build
 build_options = {
-    "packages": ["flask", "flask_login", "sqlalchemy","dotenv", "onnxruntime", "onnx", "flaskwebgui", "yolov5", "cv2", "numpy", "torch", "torchvision", "PIL", "tqdm", "requests", "matplotlib", "seaborn", "thop", "gdown"],
+    "packages": ["flask", "flask_login", "flask_mail", "flask_admin", "sqlalchemy", "dotenv", "onnxruntime", "onnx", "flaskwebgui", "yolov5", "cv2", "numpy", "torch", "torchvision", "PIL", "tqdm", "requests", "matplotlib", "seaborn", "thop", "gdown"],
     "includes": ["werkzeug", "sqlite3"],
     "excludes": ["tkinter", "pyside2"],
     "include_files": included_files,

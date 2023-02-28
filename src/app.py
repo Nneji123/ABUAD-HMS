@@ -57,17 +57,9 @@ def load_user(user_id):
         return render_template("error.html", e="Database not found")
 
 
-@app.route("/favicon.ico")
-def favicon():
-    return send_from_directory(
-        os.path.join(app.root_path, "./templates/static"),
-        "favicon.ico",
-        mimetype="image/vnd.microsoft.icon",
-    )
-
 
 if __name__ == "__main__":
-    # ui.run()
-    app.run(
-        host="0.0.0.0", port=3000, debug=configs[SERVER_MODE]["DEBUG"], threaded=True
-    )
+    ui.run()
+    # app.run(
+    #     host="0.0.0.0", port=3000, debug=configs[SERVER_MODE]["DEBUG"], threaded=True
+    # )
