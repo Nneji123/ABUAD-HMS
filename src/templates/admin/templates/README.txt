@@ -1,0 +1,1 @@
+When you install flask_admin, go to the install folder and replace the base.html and master.html with the files in this directory.
