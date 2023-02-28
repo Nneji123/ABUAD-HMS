@@ -1,6 +1,6 @@
 {% extends 'admin/master.html' %}
 {% block body %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}"> -->
 
 {{ super() }}
 <div class="row">
@@ -42,67 +42,5 @@
     </div>
   </div>
 {% endblock body %}
-{% block extra_head %}
-{{ super()}}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-{% endblock %}
 
-{% block access_control %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-
-<ul class="nav navbar-nav navbar-right">
-  <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-  <li>
-      {% if current_user.is_authenticated %}
-      <a href="{{url_for('home.show')}}">
-          <button type="button" class="btn btn-primary me-3" style="font-family: 'Poppins', sans-serif;">Back Home</button>
-      </a>        
-      {% endif %}
-  </li>
-  <li>
-      {% if current_user.is_authenticated %}
-      <a href="{{url_for('admin.logout')}}">
-          <button type="button" class="btn btn-primary me-3" style="font-family: 'Poppins', sans-serif; margin-left: 10px;">Logout</button>
-      </a>        
-      {% endif %}
-  </li>
-</ul>
-{% endblock %}
-</div>
-</nav>
-
-{% block head %}
-{{ super() }}
-
-<style>
-    .navbar-brand img {
-        height: 30px;
-        width: auto;
-    }
-
-    .gradient-custom-2 {
-        /* fallback for old browsers */
-        background: #fccb90;
-
-        /* Chrome 10-25, Safari 5.1-6 */
-        background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
-
-        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        background: linear-gradient(to right, #9d24ee, #d836c2, #dd36ab, #b44593);
-    }
-</style>
-{% endblock %}
-
-{% block brand %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-
-
-<a class="navbar-brand" href="/home">
-    <img src="{{ url_for('static', filename='logo.png') }}" alt="ABUAD LMS Logo">
-</a>
-{% endblock %}
-{% block head_css %}
-{{ super() }}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='admin.css') }}" />
-{% endblock %}
 

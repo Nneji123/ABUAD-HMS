@@ -43,6 +43,10 @@
                 </ul>
 
                 <div class="d-flex align-items-center">
+                    <a href="{{url_for('home.show')}}">
+                        <button type="button" class="btn btn-primary me-3"
+                            style="font-family: 'Poppins', sans-serif;">Back Home</button>
+                    </a>
                     <a href="/logout">
                         <button type="button" class="btn btn-primary me-3" style="font-family: 'Poppins', sans-serif;">Logout</button>
                     </a>
@@ -58,7 +62,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title" style="font-family: 'Poppins', sans-serif;">Smoking Detection</h5>
-                        <!-- <img src="/smoking_feed" width="500" height="360" alt="Smoking Detection" ></img> -->
+                        <img src="/smoking_feed" width="500" height="360" alt="Smoking Detection" ></img>
                     </div>
                 </div>
             </div>
@@ -73,5 +77,9 @@
         </div>
     </div>
 </body>
+<script>
+    fetch('/start');
+    window.onbeforeunload = () => fetch('/stop');
+</script>
 
 </html>

@@ -1,3 +1,4 @@
+import os
 import time
 
 import cv2
@@ -12,6 +13,11 @@ from yolov5.utils.general import xyxy2xywh
 from yolov5.utils.plots import Annotator, colors
 from yolov5.utils.torch_utils import select_device
 
+
+import threading
+
+# create a lock to synchronize access to the camera
+camera_lock = threading.Lock()
 
 
 # ONNX Initializations
@@ -47,12 +53,17 @@ deepsort = DeepSort(
 names = model.module.names if hasattr(model, "module") else model.names
 
 
-def smoking_stream():
-    cap = cv2.VideoCapture(0)
+def smoking_stream(cap):
+    # cap = cv2.VideoCapture(0)
     model.conf = 0.2
     model.iou = 0.5
     model.classes = [0]
     while True:
+        # acquire the lock before accessing the camera
+        camera_lock.acquire()
+        success, frame = cap.read()
+        # release the lock after accessing the camera
+        camera_lock.release()
         ret, frame = cap.read()
         if not ret:
             print("Error: failed to capture image")
@@ -101,12 +112,15 @@ def smoking_stream():
         )
 
 
-def violence_stream():
+
+def violence_stream(cap):
     # cap = cv2.VideoCapture(0)
-    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
     while True:
+        # acquire the lock before accessing the camera
+        camera_lock.acquire()
+        success, frame = cap.read()
+        # release the lock after accessing the camera
+        camera_lock.release()
         frames_list = []
         for frame_counter in range(SEQUENCE_LENGTH):
             success, frame = cap.read()
@@ -128,6 +142,7 @@ def violence_stream():
         if predicted_class_name == "Violence":
             image_name = "violence_detected_" + str(int(time.time())) + ".jpg"
             text = "Violence Detected!"
+            print("Violence Detected!")
         else:
             text = ""
         text_size = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 1.2, 2)[0]
@@ -150,4 +165,82 @@ def violence_stream():
         key = cv2.waitKey(20)
         if key == 27:
             break
-    cap.release()
+
+
+def get_image_files(directory):
+    """
+    Returns a list of all image files (jpg, jpeg, png, gif) in the given directory.
+    """
+    image_extensions = ['.jpg', '.jpeg', '.png', '.gif']
+    image_files = []
+    for file in os.listdir(directory):
+        if os.path.splitext(file)[1].lower() in image_extensions:
+            image_files.append(os.path.join('static/offenders', file))
+    return image_files
+
+
+
+# def violence_stream(cap):
+#     # cap = cv2.VideoCapture(0)
+#     while True:
+#         # acquire the lock before accessing the camera
+#         camera_lock.acquire()
+#         success, frame = cap.read()
+#         # release the lock after accessing the camera
+#         camera_lock.release()
+
+#         text = "Violence Detected!"
+#         text_size = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 1.2, 2)[0]
+#         text_x = int((frame.shape[1] - text_size[0]) / 2)
+#         text_y = int((frame.shape[0] + text_size[1]) / 2)
+#         cv2.putText(
+#             frame,
+#             text,
+#             (text_x, text_y),
+#             cv2.FONT_HERSHEY_SIMPLEX,
+#             1,
+#             (255, 255, 255),
+#             2,
+#         )
+#         ret, buffer = cv2.imencode(".jpg", frame)
+#         new_frame = buffer.tobytes()
+#         yield (
+#             b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + new_frame + b"\r\n"
+#         )
+#         key = cv2.waitKey(20)
+#         if key == 27:
+#             break
+        
+#     # cap.release()
+
+# def smoking_stream(cap):
+#     # cap = cv2.VideoCapture(0)
+#     while True:
+#         # acquire the lock before accessing the camera
+#         camera_lock.acquire()
+#         success, frame = cap.read()
+#         # release the lock after accessing the camera
+#         camera_lock.release()
+
+#         text = "Smoking Detected"
+#         text_size = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 1.2, 2)[0]
+#         text_x = int((frame.shape[1] - text_size[0]) / 2)
+#         text_y = int((frame.shape[0] + text_size[1]) / 2)
+#         cv2.putText(
+#             frame,
+#             text,
+#             (text_x, text_y),
+#             cv2.FONT_HERSHEY_SIMPLEX,
+#             1,
+#             (255, 255, 255),
+#             2,
+#         )
+#         ret, buffer = cv2.imencode(".jpg", frame)
+#         new_frame = buffer.tobytes()
+#         yield (
+#             b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + new_frame + b"\r\n"
+#         )
+#         key = cv2.waitKey(20)
+#         if key == 27:
+#             break
+#     # cap.release()

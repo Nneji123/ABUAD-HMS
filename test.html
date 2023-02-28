@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jokes Generator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .spinner {
+            border: 0.2em solid rgba(0, 0, 0, 0.1);
+            border-left-color: #636767;
+            border-radius: 50%;
+            height: 1.5em;
+            width: 1.5em;
+            -webkit-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .chat {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .chat-avatar {
+            display: inline-block;
+            vertical-align: top;
+            width: 50px;
+        }
+
+        .chat-avatar img {
+            width: 100%;
+            border-radius: 50%;
+        }
+
+        .chat-text {
+            display: inline-block;
+            vertical-align: top;
+            width: calc(100% - 50px);
+        }
+
+        .chat-text p {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Jokes Generator</h1>
+        <div class="conversation">
+            <div class="chat">
+                <div class="chat-avatar">
+                    <img src="avatar.png">
+                </div>
+                <div class="chat-text">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" id="generate-joke">Generate Joke</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        const jokes = [
+            "Why did the tomato turn red? Because it saw the salad dressing!",
+            "Why did the old man fall in the well? Because he couldn't see that well.",
+            "Why did the chicken cross the playground? To get to the other slide.",
+            "Why did the hipster burn his tongue? He drank his coffee before it was cool.",
+            "Why don't scientists trust atoms? Because they make up everything."
+        ];
+
+        const chat = document.querySelector('.chat-text');
+        const spinner = document.querySelector('.spinner');
+        const generateJokeButton = document.querySelector('#generate-joke');
+
+        function generateJoke() {
+            const randomIndex = Math.floor(Math.random() * jokes.length);
+            const joke = jokes[randomIndex];
+
+            // Show spinner
+            spinner.style.display = 'inline-block';
+
+            // Simulate typing effect
+            let i = 0;
+            const typeInterval = setInterval(() => {
+                chat.innerHTML += joke.charAt(i);
+                i++;
+
+                if (i > joke.length - 1) {
+                    // Hide spinner
+                    spinner.style.display = 'none';
+                    clearInterval(typeInterval);
+                }
+            }, 50);
+        }
+
+        generateJokeButton.addEventListener('click', generateJoke);
+
+
+    </script>
+</body>
+
+</html>

@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, send_from_directory
 from flask_admin import Admin
 from flask_login import LoginManager
-
 from flaskwebgui import FlaskUI
 
 
