@@ -22,24 +22,25 @@
 > Visit the [ABUAD Smart School Environment](https://github.com/Nneji123/ABUAD-SMART-SCHOOL-ENVIRONMENT) Repository to learn more details about other aspects of the project. 
 
 # Table Of Contents
-- [Table Of Contents](#table-of-contents)
-- [Introduction](#introduction)
-- [Motivation](#motivation)
-- [Features](#features)
-- [Repository Structure](#repository-structure)
-- [Tools Used](#tools-used)
-- [Flowchart](#flowchart)
-- [Use Case Diagram](#use-case-diagram)
-- [Screenshots](#screenshots)
-- [Demo Videos](#demo-videos)
-- [Installation](#installation)
-- [How to Run ABUAD HMS](#how-to-run-abuad-hms)
-  - [How to Run as Desktop App](#how-to-run-as-desktop-app)
-    - [Building Desktop App with cx\_freeze](#building-desktop-app-with-cx_freeze)
-  - [How to run in Docker and Docker Compose](#how-to-run-in-docker-and-docker-compose)
-- [Deployment](#deployment)
-- [References](#references)
-- [License](#license)
+- :bookmark_tabs: [Table Of Contents](#table-of-contents)
+- :wave: [Introduction](#introduction)
+- :bulb: [Motivation](#motivation)
+- :star2: [Features](#features)
+- :file_folder: [Repository Structure](#repository-structure)
+- :wrench: [Tools Used](#tools-used)
+- :chart_with_upwards_trend: [Flowchart](#flowchart)
+- :bar_chart: [Use Case Diagram](#use-case-diagram)
+- :camera: [Screenshots](#screenshots)
+- :movie_camera: [Demo Videos](#demo-videos)
+- :computer: [Installation](#installation)
+- :rocket: [How to Run ABUAD HMS](#how-to-run-abuad-hms)
+  - :computer_mouse: [How to Run as Desktop App](#how-to-run-as-desktop-app)
+    - :building_construction: [Building Desktop App with cx_freeze](#building-desktop-app-with-cx_freeze)
+  - :whale: [How to run in Docker and Docker Compose](#how-to-run-in-docker-and-docker-compose)
+- :cloud: [Deployment](#deployment)
+- :book: [References](#references)
+- :page_with_curl: [License](#license)
+
 
 # Introduction
 ABUAD HMS (Abuad Hostel Monitoring System) is a part of the Abuad Smart School Environment, a comprehensive system that integrates technology into various aspects of the school environment to enhance learning, safety, and convenience. ABUAD HMS is a web-based application developed to simplify the process of monitoring student activity in hostels of Afe Babalola University.
