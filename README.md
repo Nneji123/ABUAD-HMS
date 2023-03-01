@@ -40,6 +40,7 @@
 - [Deployment](#deployment)
 - [References](#references)
 - [License](#license)
+
 # Introduction
 ABUAD HMS (Abuad Hostel Monitoring System) is a part of the Abuad Smart School Environment, a comprehensive system that integrates technology into various aspects of the school environment to enhance learning, safety, and convenience. ABUAD HMS is a web-based application developed to simplify the process of monitoring student activity in hostels of Afe Babalola University.
 
