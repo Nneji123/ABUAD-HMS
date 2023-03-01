@@ -332,6 +332,6 @@ References:
 2. Jocher, G. (2021). YOLOv5. GitHub repository. https://github.com/ultralytics/yolov5
 3. Nariani, D. (2022). Violence&not_violence Dataset. Roboflow Universe. https://universe.roboflow.com/dinesh-nariani-rmnpr/violence-not_violence-ziv7b
 4. Yi. (2023). smoke Dataset. Roboflow Universe. https://universe.roboflow.com/yi-emjui/smoke-qkxhl
-# License
+# :page_with_curl: License
 [MIT](./LICENSE.md)
 
