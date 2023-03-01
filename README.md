@@ -21,7 +21,7 @@
 
 > Visit the [ABUAD Smart School Environment](https://github.com/Nneji123/ABUAD-SMART-SCHOOL-ENVIRONMENT) Repository to learn more details about other aspects of the project. 
 
-# Table Of Contents
+# :bookmark_tabs: Table Of Contents
 - :bookmark_tabs: [Table Of Contents](#table-of-contents)
 - :wave: [Introduction](#introduction)
 - :bulb: [Motivation](#motivation)
@@ -42,18 +42,18 @@
 - :page_with_curl: [License](#license)
 
 
-# Introduction
+# :wave: Introduction
 ABUAD HMS (Abuad Hostel Monitoring System) is a part of the Abuad Smart School Environment, a comprehensive system that integrates technology into various aspects of the school environment to enhance learning, safety, and convenience. ABUAD HMS is a web-based application developed to simplify the process of monitoring student activity in hostels of Afe Babalola University.
 
 The system utilizes state-of-the-art object detection and classification models to monitor and detect violence in hostels. With the real-time monitoring feature, the authorities can take necessary actions promptly, ensuring the safety and well-being of students in the hostels.
 
-# Motivation
+# :bulb: Motivation
 
 The development of ABUAD HMS was motivated by the need to ensure a safe and secure environment for students in the hostels. Violence in hostels is a serious issue that poses a threat to the well-being of students. The traditional methods of monitoring and detecting such activities are not always effective, and there is a need for a more advanced and automated system.
 
 ABUAD HMS aims to provide a solution to this problem by leveraging technology to monitor and detect violence in hostels. The system is designed to be user-friendly, efficient, and effective, and it ensures that the authorities can take prompt and necessary actions when needed. The development of ABUAD HMS demonstrates Afe Babalola University's commitment to providing a safe and secure environment for its students.
 
-# Features 
+# :star2: Features 
 ABUAD HMS (Abuad Hostel Monitoring System) is a comprehensive system that offers various features to simplify the process of hostel management and ensure the safety and well-being of students. Some of the key features of ABUAD HMS are:
 
 - Real-time Monitoring: ABUAD HMS offers real-time monitoring of hostels using state-of-the-art object detection and classification models. The system alerts the authorities when it detects any suspicious activities such as violence or smoking, enabling them to take prompt action.
@@ -62,7 +62,7 @@ ABUAD HMS (Abuad Hostel Monitoring System) is a comprehensive system that offers
 
 - Offenders List: ABUAD HMS allows the authorities to view a list of offenders who have engaged in activities such as smoking or violence in the hostels. The system maintains a record of such activities and provides the necessary information to the authorities for taking appropriate actions.
 
-# Repository Structure
+# :file_folder: Repository Structure
 ```
 |-- Dockerfile
 |-- LICENSE.md
@@ -115,7 +115,7 @@ ABUAD HMS (Abuad Hostel Monitoring System) is a comprehensive system that offers
 |   `-- utils.py
 ```
 
-# Tools Used 
+# :wrench: Tools Used 
  Some of the key tools used in the development of ABUAD HMS are:
 
 1. HTML: HTML was used to develop the structure and content of the web pages in ABUAD HMS.
@@ -147,17 +147,17 @@ ABUAD HMS (Abuad Hostel Monitoring System) is a comprehensive system that offers
 14. Inno Setup: Inno Setup is a free installer for Windows programs used in ABUAD HMS to create an installation package for the application.
 
 
-# Flowchart
+# :chart_with_upwards_trend: Flowchart
 <p align="center">
   <img src="./screens/flowchart.png" alt="Flow Chart", width="500", height="500">
 </p>
 
-# Use Case Diagram
+# :bar_chart: Use Case Diagram
 <p align="center">
   <img src="./screens/usecasediagram.png" alt="Flow Chart", width="500", height="500">
 </p>
 
-# Screenshots
+# :camera: Screenshots
 
 |     |     |     |
 | --- | --- | --- |
@@ -169,8 +169,8 @@ ABUAD HMS (Abuad Hostel Monitoring System) is a comprehensive system that offers
 
 
 
-# Demo Videos
-# Installation
+# :movie_camera: Demo Videos
+# :computer: Installation
 To use the Abuad HMS application, you can to download and install the application package from the GitHub releases section. Follow these steps to install the application:
 
 1. Go to the GitHub releases page for the project.
@@ -181,8 +181,8 @@ To use the Abuad HMS application, you can to download and install the applicatio
 
 >Note that the installation process may vary depending on your operating system and system configuration. If you encounter any issues during the installation process, please refer to the project documentation or contact the project maintainers for assistance.
 
-# How to Run ABUAD HMS 
-Running the Application
+# :rocket: How to Run ABUAD HMS 
+
 To run the Abuad HMS application using Python, follow these steps:
 
 1. Clone the repository to your computer.
@@ -191,7 +191,7 @@ git clone https://github.com/Nneji123/ABUAD-HMS.git
 cd ABUAD-HMS
 ```
 
-2. Create and activate your virtual environment. For Windows users, you can activate your environment by running the following command in your terminal:
+1. Create and activate your virtual environment. For Windows users, you can activate your environment by running the following command in your terminal:
 
 ```bash
 python -m venv env
@@ -251,11 +251,11 @@ Note that you should replace the values of the environment variables with your o
 Once the application is running, you can visit it in your web browser by going to http://localhost:3000/.
 
 
-## How to Run as Desktop App
+## :computer_mouse: How to Run as Desktop App
 To run the application as a desktop app, follow these steps:
 
 1. Open the app.py file in a text editor.
-2. Uncomment the line ui.run() by removing the # symbol in front of it.
+2. Uncomment the line `ui.run()` by removing the # symbol in front of it.
 3. Comment out the line app.run(...) by adding a # symbol in front of it.
 4. Save the changes to the app.py file.
 
@@ -268,7 +268,7 @@ This will start the Flask web server and launch the application in your default 
 
 > Note that when running the application as a desktop app, you will not be able to access it from other devices on your network. If you want to run the application on a network, you will need to run it as a web app using the app.run(...) method.
 
-### Building Desktop App with cx_freeze
+### :building_construction: Building Desktop App with cx_freeze
 To build the application using cx_Freeze and setup.py file, follow the steps below:
 
 1. Activate the virtual environment.
@@ -281,7 +281,7 @@ To build the application using cx_Freeze and setup.py file, follow the steps bel
 
 > Note that you may need to fine-tune the setup.py file to add additional dependencies or exclude some files depending on your needs.
 
-## How to run in Docker and Docker Compose
+## :whale: How to run in Docker and Docker Compose
 To run the application using Docker, follow these steps:
 
 1. Make sure Docker is installed on your machine.
@@ -303,28 +303,29 @@ To run the application using Docker Compose, follow these steps:
 These steps will start the application in a Docker container, which can be accessed by visiting http://localhost:3000 in a web browser.
 
 
-# Deployment
+# :cloud: Deployment
 To deploy the application using the Railway or Render button, follow these steps:
+
+1. Click on the Railway or Render button in the repository to open the deployment platform.
 
 <div align="center">
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/Fr7c3B?referralCode=ZYOf2M)
 [![Deploy on Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
 </div>
 
-1. Click on the Railway or Render button in the repository to open the deployment platform.
 
 
-
-1. Sign up or log in to the deployment platform.
-2. Connect your GitHub account to the deployment platform.
-3. Choose the repository where the application code is located.
-4. Configure the deployment settings, such as the name of the application, the deployment region, and the deployment type (e.g., Docker container or static site).
-5. Deploy the application by clicking on the "Deploy" button.
-6. Wait for the deployment process to finish. Once it's done, the application will be available at the URL provided by the deployment platform.
+2. Sign up or log in to the deployment platform.
+3. Connect your GitHub account to the deployment platform.
+4. Choose the repository where the application code is located.
+5. Configure the deployment settings, such as the name of the application, the deployment region, and the deployment type (e.g., Docker container or static site).
+6. Deploy the application by clicking on the "Deploy" button.
+7. Wait for the deployment process to finish. Once it's done, the application will be available at the URL provided by the deployment platform.
 
 > Note that the specific steps and options may vary depending on the deployment platform used. It's recommended to check the documentation and tutorials provided by the platform for more detailed instructions on how to deploy the application.
-# References
+# :book: References
 References:
 
 1. Ultralytics. (2021). YOLOv5. https://github.com/ultralytics/yolov5
