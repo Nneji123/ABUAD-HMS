@@ -35,7 +35,7 @@ CLASSES_LIST = ["NonViolence", "Violence"]
 
 device = select_device("gpu" if torch.cuda.is_available() else "cpu")
 # load model
-model = yolov5.load("./models/yolov5n.onnx")
+model = yolov5.load("./models/smoking_small.onnx")
 device = select_device("cpu")  # 0 for gpu, '' for cpu
 # initialize deepsort
 cfg = get_config()
@@ -55,9 +55,10 @@ names = model.module.names if hasattr(model, "module") else model.names
 
 def smoking_stream(cap):
     # cap = cv2.VideoCapture(0)
-    model.conf = 0.2
+    model.conf = 0.6
     model.iou = 0.5
     model.classes = [0]
+
     while True:
         # acquire the lock before accessing the camera
         camera_lock.acquire()

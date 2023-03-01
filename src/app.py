@@ -59,7 +59,7 @@ def load_user(user_id):
 
 
 if __name__ == "__main__":
-    ui.run()
-    # app.run(
-    #     host="0.0.0.0", port=3000, debug=configs[SERVER_MODE]["DEBUG"], threaded=True
-    # )
+    # ui.run()
+    app.run(
+        host="0.0.0.0", port=3000, debug=configs[SERVER_MODE]["DEBUG"], threaded=True
+    )
