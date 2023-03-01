@@ -77,6 +77,16 @@ ABUAD HMS (Abuad Hostel Monitoring System) is a comprehensive system that offers
 
 # Screenshots
 
+|     |     |     |
+| --- | --- | --- |
+| *Screenshot 1: Login page* | *Screenshot 2: Admin panel* | *Screenshot 3: View offenders page* |
+|![Screenshot 1](./screens/abuad_hms0.png "Screenshot 1") | ![Screenshot 2](./screens/abuad_hms1.png "Screenshot 2") | ![Screenshot 3](./screens/abuad_hms2.png "Screenshot 3") |
+| *Screenshot 4: View database page* | *Screenshot 5: Monitoring page (Smoking)* | *Screenshot 6: Monitoring page (Violence)* |
+| ![Screenshot 4](./screens/abuad_hms3.png "Screenshot 4") | ![Screenshot 5](./screens/abuad_hms4.png "Screenshot 5") | ![Screenshot 6](./screens/abuad_hms5.png "Screenshot 6") |
+
+
+
+
 # Demo Videos
 # Installation
 # How to Run ABUAD HMS
