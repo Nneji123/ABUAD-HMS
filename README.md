@@ -181,7 +181,7 @@ ABUAD HMS (Abuad Hostel Monitoring System) is a comprehensive system that offers
 
 # :movie_camera: Demo Videos
 <p align="center">
-  <video src="./screens/demo.mp4" alt="ABUAD HMS Demo">
+  <video src="./screens/demo.mp4" alt="ABUAD HMS Demo" autoplay >
 </p>
 
 # Model Training
@@ -192,6 +192,10 @@ The datasets for the two tasks were obtained from Roboflow and were preprocessed
 On the other hand, the violence dataset consists of 21,990 images, and numbers are annotated in multi-class classification format. The images were auto-oriented, resized to 640x640 pixels, and a series of augmentation techniques were applied to create 3 versions of each source image. These techniques included randomly cropping between 0 and 20 percent of the image, applying random shear of between -15° to +15° horizontally and -15° to +15° vertically, adjusting the exposure of the image randomly between -25 and +25 percent, applying random Gaussian blur of between 0 and 4.5 pixels, and applying salt and pepper noise to 5 percent of the pixels.
 
 After training, the performance of the models was evaluated using a variety of metrics such as accuracy, precision, recall, F1 score, confusion matrix, and various plots such as PR curve, F1 curve, etc. The results of the training and evaluation can be seen in the provided images and tables.
+
+> The notebooks used for training can be found below:
+> [![Violence Detection](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1XyRpTIBqZOgVr1-nLKwfFxwXCo21Pr73#scrollTo=MXWTTN2BEaqe)
+> [![Smoking Detection](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1ldT2Wcl7ScCZ393Nqsc-mBshHblCIaF4#scrollTo=P5hcEYSRfUp3)
 
 ## Violence Detection
 The section shows the results of the model training for detecting violence using YOLOv5s-cls.pt. The images display the progress of the model's loss on the training and test sets for each epoch. The lower the value of loss, the better the model's performance. The section also displays the top-1 and top-5 accuracy of the model on the test set, which measures the proportion of test set examples that the model classified correctly. Additionally, the learning rate used by the model at each epoch is shown.
