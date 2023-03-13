@@ -32,6 +32,16 @@
 - [:bar\_chart: Use Case Diagram](#bar_chart-use-case-diagram)
 - [:camera: Screenshots](#camera-screenshots)
 - [:movie\_camera: Demo Videos](#movie_camera-demo-videos)
+- [Model Training](#model-training)
+  - [Violence Detection](#violence-detection)
+  - [Smoking Detection](#smoking-detection)
+    - [Confusion Matrix](#confusion-matrix)
+    - [F1 Curve](#f1-curve)
+    - [Labels Correlogram](#labels-correlogram)
+    - [Precision Curve](#precision-curve)
+    - [Precision-Recall Curve](#precision-recall-curve)
+    - [Recall Curve](#recall-curve)
+    - [Results](#results)
 - [:computer: Installation](#computer-installation)
 - [:rocket: How to Run ABUAD HMS](#rocket-how-to-run-abuad-hms)
   - [:computer\_mouse: How to Run as Desktop App](#computer_mouse-how-to-run-as-desktop-app)
@@ -170,6 +180,64 @@ ABUAD HMS (Abuad Hostel Monitoring System) is a comprehensive system that offers
 
 
 # :movie_camera: Demo Videos
+<p align="center">
+  <video src="./screens/demo.mp4" alt="ABUAD HMS Demo">
+</p>
+
+# Model Training
+The models were trained using transfer learning with Ultralytics YOLOv5, which is a popular object detection and image classification framework. The transfer learning approach involves using a pre-trained YOLO model as a starting point and fine-tuning it on a new dataset to perform the specific task of smoking detection or violence detection. The models were trained for 60 epochs, which is a common practice in deep learning training to allow the model to learn from the data and make incremental improvements over time.
+
+The datasets for the two tasks were obtained from Roboflow and were preprocessed differently. The smoking dataset consists of 6,917 images, and the smoke is annotated in YOLO v5 PyTorch format. The images were auto-oriented, resized to 640x640 pixels, and no image augmentation techniques were applied.
+
+On the other hand, the violence dataset consists of 21,990 images, and numbers are annotated in multi-class classification format. The images were auto-oriented, resized to 640x640 pixels, and a series of augmentation techniques were applied to create 3 versions of each source image. These techniques included randomly cropping between 0 and 20 percent of the image, applying random shear of between -15° to +15° horizontally and -15° to +15° vertically, adjusting the exposure of the image randomly between -25 and +25 percent, applying random Gaussian blur of between 0 and 4.5 pixels, and applying salt and pepper noise to 5 percent of the pixels.
+
+After training, the performance of the models was evaluated using a variety of metrics such as accuracy, precision, recall, F1 score, confusion matrix, and various plots such as PR curve, F1 curve, etc. The results of the training and evaluation can be seen in the provided images and tables.
+
+## Violence Detection
+The section shows the results of the model training for detecting violence using YOLOv5s-cls.pt. The images display the progress of the model's loss on the training and test sets for each epoch. The lower the value of loss, the better the model's performance. The section also displays the top-1 and top-5 accuracy of the model on the test set, which measures the proportion of test set examples that the model classified correctly. Additionally, the learning rate used by the model at each epoch is shown.
+
+![Violence Detection Model Training](./screens/violence_training_results.png)
+
+![Images](./results/violence_detection/train_images.jpg)
+
+The "train/loss" column shows the loss or error of the model on the training set at that epoch, while the "test/loss" column shows the loss on a separate validation or test set. Lower values of loss generally indicate better performance.
+
+The "metrics/accuracy_top1" and "metrics/accuracy_top5" columns show the top-1 and top-5 accuracy of the model on the test set, respectively. These metrics indicate the proportion of test set examples that the model classified correctly, with the top-1 metric measuring the proportion where the model's top prediction was correct, and the top-5 metric measuring the proportion where the correct answer was within the model's top 5 predictions.
+
+Finally, the "lr/0" column shows the learning rate used by the model at each epoch, which controls how quickly the model's parameters are updated during training.
+
+The complete table results can be found [here.](./results/violence_detection/results.csv)
+
+## Smoking Detection
+The section shows the results of the model training for detecting smoking using YOLOv5s.pt. The section displays a confusion matrix, F1 curve, labels correlogram, precision curve, precision-recall curve, and recall curve, all of which are tools used to evaluate the performance of the model. The results include a visual representation of the confusion matrix, which shows the true and predicted labels for each class. The F1 curve is used to plot the relationship between precision and recall, while the labels correlogram displays the correlations between different classes. The precision curve, precision-recall curve, and recall curve all plot the precision, recall, and F1 score of the model at different thresholds. Finally, the section displays the results of the model on the test set, including the accuracy, precision, recall, and F1 score for each class.
+### Confusion Matrix
+![Confusion Matrix](./results/smoking_detection/confusion_matrix.png)
+### F1 Curve
+![F1 Curve](./results/smoking_detection/F1_curve.png)
+### Labels Correlogram
+![Correlogram](./results/smoking_detection/labels_correlogram.jpg)
+### Precision Curve
+![P Curve](./results/smoking_detection/P_curve.png)
+### Precision-Recall Curve
+![PR Curve](./results/smoking_detection/PR_curve.png)
+### Recall Curve
+![R Curve](./results/smoking_detection/R_curve.png)
+
+### Results
+![Results](./results/smoking_detection/results.png)
+![Results Table](./results/smoking_detection/results_table.png)
+
+The table shows the results of object detection using YOLOv5 over 60 epochs. The model is trained on the train dataset, and the validation dataset is used to evaluate the performance of the model. The results are shown in terms of various metrics, including loss, precision, recall, and mAP (mean average precision).
+
+The columns 'train/box_loss', 'train/obj_loss', and 'train/cls_loss' represent the losses of the YOLOv5 model during training on the train dataset. The column 'val/box_loss', 'val/obj_loss', and 'val/cls_loss' represent the losses of the YOLOv5 model during validation on the validation dataset.
+
+The columns 'metrics/precision', 'metrics/recall', and 'metrics/mAP_0.5' represent the performance metrics of the YOLOv5 model. Precision is the ratio of correctly predicted positive instances to the total predicted positive instances. Recall is the ratio of correctly predicted positive instances to the total actual positive instances. mAP is the mean average precision, which is the average of AP (average precision) over different intersection over union (IoU) thresholds. mAP_0.5:0.95 is the mAP computed using the IoU thresholds from 0.5 to 0.95.
+
+The columns 'x/lr0', 'x/lr1', and 'x/lr2' represent the learning rate at the beginning, middle, and end of the training process, respectively.
+
+From the table, we can observe that the losses decrease and the performance metrics (precision, recall, and mAP) increase as the model is trained for more epochs. This indicates that the model is learning to detect objects better as it is trained for more epochs.
+
+The complete table results can be found [here.](./results/smoking_detection/results.csv)
 # :computer: Installation
 To use the Abuad HMS application, you can to download and install the application package from the GitHub releases section. Follow these steps to install the application:
 
