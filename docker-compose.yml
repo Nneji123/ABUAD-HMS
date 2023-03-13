@@ -1,7 +1,7 @@
 services:
   app:
     build: .
-    container_name: abuad-lms
+    container_name: abuad-hms
     command: python app.py
     ports:
       - 8080:3000
