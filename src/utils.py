@@ -1,5 +1,6 @@
 import os
 import threading
+from datetime import datetime
 
 import cv2
 import torch
@@ -33,7 +34,8 @@ deepsort = DeepSort(
 
 
 def smoking_stream(cap):
-    model = yolov5.load("./models/smoking_small.onnx")
+    save_folder = "./templates/static/offenders/"
+    model = yolov5.load("./models/smoking_large.onnx")
     names = model.module.names if hasattr(model, "module") else model.names
     model.conf = 0.6
     model.iou = 0.5
@@ -53,16 +55,16 @@ def smoking_stream(cap):
         lst = []
         results = model(frame, augment=True)
         df = results.pandas().xyxy[0]
-        # print(df)
         count = 0
         for i in df["name"]:
             lst.append(i)
-            count += 1
-            if "person" in lst:
-                # print("This person was caught smoking")
-                cv2.imwrite(f"./frame/file_{count}.jpg/", frame)
+            if "smoke" in lst and df[df["name"] == "smoke"]["confidence"].iloc[0] >= 0.85:
+                count += 1
+                print("Smoking Detected")
+                filename = f"smoking_detected_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}.jpg"
+                cv2.imwrite(os.path.join(save_folder, filename), frame)  # save frame in "smoke_frames" folder
             else:
-                print("No smoking")
+                pass
         # proccess
         annotator = Annotator(frame, line_width=2, pil=not ascii)
         det = results.pred[0]
@@ -89,9 +91,11 @@ def smoking_stream(cap):
         yield (
             b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + image_bytes + b"\r\n"
         )
+        # cap.release()
 
 
 def violence_stream(cap):
+    save_folder = "./templates/static/offenders/"
     weights = "./models/violence_yolo.onnx"
     model = DetectMultiBackend(
         weights, device=device, dnn=False, data=None, fp16=False
@@ -115,8 +119,10 @@ def violence_stream(cap):
         results = model(im)  # inference
         pred = F.softmax(results, dim=1)  # probabilities
         top5i = pred.argsort(1, descending=True)[0, :5].tolist()  # top 5 indices
-        top5 = [f"{names[i]} {pred[0, i]:.2f}" for i in top5i]
-        # top 5 classes
+        top5 = [f"{names[i]} {pred[0, i]:.2f}" for i in top5i] # top 5 classes
+        if "violence" in top5[0] and pred[0, top5i[0]] >= 0.85:
+            filename = f"violence_detected_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}.jpg"
+            cv2.imwrite(os.path.join(save_folder, filename), frame)
         cv2.putText(
             im0,
             ", ".join(top5),
@@ -130,7 +136,7 @@ def violence_stream(cap):
         yield (
             b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + im0 + b"\r\n"
         )  # encode the image as JPEG and return the bytes
-
+        # cap.release()
 
 def get_image_files(directory):
     """
