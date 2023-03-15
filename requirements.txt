@@ -117,7 +117,7 @@ traitlets==5.9.0
 typing-extensions==4.5.0
 urllib3==1.26.14
 wcwidth==0.2.6
-WebUI @ git+https://github.com/Widdershin/flask-desktop.git@9f0e9e033909516e1c0669fdf38e9c9c904fe7ac
+WebUI @ git+https://github.com/Nneji123/flask-desktop.git
 Werkzeug==2.2.3
 WTForms==3.0.1
 yolov5==7.0.8

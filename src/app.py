@@ -3,10 +3,9 @@ import os
 import sqlalchemy
 
 from dotenv import load_dotenv
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template
 from flask_admin import Admin
 from flask_login import LoginManager
-from flaskwebgui import FlaskUI
 from webui import WebUI
 
 
@@ -22,10 +21,6 @@ load_dotenv()
 
 
 app = Flask(__name__, static_folder="./templates/static")
-# ui = FlaskUI(
-#     app=app, server="flask", port=5000, fullscreen=True, width=800, height=600
-# )
-
 ui = WebUI(app, port=3000, debug=False, using_win32=True, icon_path="logo.ico", app_name="ABUAD HMS")
 
 SERVER_MODE = os.getenv("SERVER_MODE")
