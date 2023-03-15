@@ -5,8 +5,6 @@
     <title>ABUAD HMS - Student Monitoring</title>
     <!-- CSS and JS links go here -->
     <link rel="icon" type="image/ico" href="{{ url_for('static',filename='logo.png') }}" />
-    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}" /> -->
-
     <script src="https://kit.fontawesome.com/5285e374b0.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
 
@@ -77,9 +75,4 @@
         </div>
     </div>
 </body>
-<script>
-    fetch('/start');
-    window.onbeforeunload = () => fetch('/stop');
-</script>
-
 </html>

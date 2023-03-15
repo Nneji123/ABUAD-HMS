@@ -7,6 +7,7 @@ from flask import Flask, render_template, send_from_directory
 from flask_admin import Admin
 from flask_login import LoginManager
 from flaskwebgui import FlaskUI
+from webui import WebUI
 
 
 from config import configs
@@ -21,9 +22,11 @@ load_dotenv()
 
 
 app = Flask(__name__, static_folder="./templates/static")
-ui = FlaskUI(
-    app=app, server="flask", port=5000, fullscreen=True, width=800, height=600
-)
+# ui = FlaskUI(
+#     app=app, server="flask", port=5000, fullscreen=True, width=800, height=600
+# )
+
+ui = WebUI(app, port=3000, debug=False, using_win32=True, icon_path="logo.ico", app_name="ABUAD HMS")
 
 SERVER_MODE = os.getenv("SERVER_MODE")
 if SERVER_MODE in configs:
@@ -59,7 +62,7 @@ def load_user(user_id):
 
 
 if __name__ == "__main__":
-    # ui.run()
-    app.run(
-        host="0.0.0.0", port=3000, debug=configs[SERVER_MODE]["DEBUG"], threaded=True
-    )
+    ui.run()
+    # app.run(
+    #     host="0.0.0.0", port=3000, debug=configs[SERVER_MODE]["DEBUG"], threaded=True
+    # )

@@ -17,6 +17,11 @@ from deep_sort.utils.parser import get_config
 # create a lock to synchronize access to the camera
 camera_lock = threading.Lock()
 
+save_folder = "./templates/static/offenders/"
+
+model_smoking = yolov5.load("./models/smoking_large.onnx")
+model_violence = "./models/violence_yolo.onnx"
+
 
 device = select_device("gpu" if torch.cuda.is_available() else "cpu")
 # initialize deepsort
@@ -34,8 +39,7 @@ deepsort = DeepSort(
 
 
 def smoking_stream(cap):
-    save_folder = "./templates/static/offenders/"
-    model = yolov5.load("./models/smoking_large.onnx")
+    model = model_smoking
     names = model.module.names if hasattr(model, "module") else model.names
     model.conf = 0.6
     model.iou = 0.5
@@ -95,8 +99,7 @@ def smoking_stream(cap):
 
 
 def violence_stream(cap):
-    save_folder = "./templates/static/offenders/"
-    weights = "./models/violence_yolo.onnx"
+    weights = model_violence
     model = DetectMultiBackend(
         weights, device=device, dnn=False, data=None, fp16=False
     )  # load model
