@@ -21,7 +21,7 @@ load_dotenv()
 
 
 app = Flask(__name__, static_folder="./templates/static")
-ui = WebUI(app, port=3000, debug=False, using_win32=True, icon_path="logo.ico", app_name="ABUAD HMS")
+ui = WebUI(app, port=3000, debug=True, icon_path="logo.ico", app_name="ABUAD HMS")
 
 SERVER_MODE = os.getenv("SERVER_MODE")
 if SERVER_MODE in configs:

@@ -1,4 +1,6 @@
 import sys
+import shutil 
+import os
 from cx_Freeze import setup, Executable
 
 if sys.platform == "win32":
@@ -64,10 +66,19 @@ setup(
         Executable(
             script="app.py",
             icon="logo.ico",
-            base=base,
             target_name="ABUAD-HMS.exe",
             shortcut_name="ABUAD-HMS",
             shortcut_dir="ProgramMenuFolder",
         ),
     ],
 )
+
+# Define the post build function
+def post_build(build_dir):
+    # Define the source and destination paths
+    src_path = os.path.join("..", "env", "Lib", "site-packages", "matplotlib.libs")
+    dest_path = os.path.join(build_dir, "lib")
+    # Copy the matplotlib.libs folder to the build directory
+    shutil.copytree(src_path, os.path.join(dest_path, "matplotlib.libs"))
+    
+post_build(r"build\exe.win-amd64-3.8")
