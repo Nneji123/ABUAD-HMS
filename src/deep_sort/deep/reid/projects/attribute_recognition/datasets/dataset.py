@@ -5,7 +5,6 @@ from torchreid.utils import read_image
 
 
 class Dataset(object):
-
     def __init__(
         self,
         train,
@@ -13,7 +12,7 @@ class Dataset(object):
         test,
         attr_dict,
         transform=None,
-        mode='train',
+        mode="train",
         verbose=True,
         **kwargs
     ):
@@ -24,9 +23,9 @@ class Dataset(object):
         self._num_attrs = len(self.attr_dict)
         self.transform = transform
 
-        if mode == 'train':
+        if mode == "train":
             self.data = self.train
-        elif mode == 'val':
+        elif mode == "val":
             self.data = self.val
         else:
             self.data = self.test
@@ -70,7 +69,7 @@ class Dataset(object):
         num_test = len(self.test)
         num_total = num_train + num_val + num_test
 
-        print('=> Loaded {}'.format(self.__class__.__name__))
+        print("=> Loaded {}".format(self.__class__.__name__))
         print("  ------------------------------")
         print("  subset   | # images")
         print("  ------------------------------")
@@ -83,5 +82,5 @@ class Dataset(object):
         print("  # attributes: {}".format(len(self.attr_dict)))
         print("  attributes:")
         for label, attr in self.attr_dict.items():
-            print('    {:3d}: {}'.format(label, attr))
+            print("    {:3d}: {}".format(label, attr))
         print("  ------------------------------")

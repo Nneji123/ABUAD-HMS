@@ -33,6 +33,7 @@ class Tracker:
     tracks : List[Track]
         The list of active tracks at the current time step.
     """
+
     GATING_THRESHOLD = np.sqrt(kalman_filter.chi2inv95[4])
 
     def __init__(self, metric, max_iou_distance=0.9, max_age=30, n_init=3, _lambda=0):
@@ -69,17 +70,19 @@ class Tracker:
 
         """
         # Run matching cascade.
-        matches, unmatched_tracks, unmatched_detections = \
-            self._match(detections)
+        matches, unmatched_tracks, unmatched_detections = self._match(detections)
 
         # Update track set.
         for track_idx, detection_idx in matches:
             self.tracks[track_idx].update(
-                self.kf, detections[detection_idx], classes[detection_idx])
+                self.kf, detections[detection_idx], classes[detection_idx]
+            )
         for track_idx in unmatched_tracks:
             self.tracks[track_idx].mark_missed()
         for detection_idx in unmatched_detections:
-            self._initiate_track(detections[detection_idx], classes[detection_idx].item())
+            self._initiate_track(
+                detections[detection_idx], classes[detection_idx].item()
+            )
         self.tracks = [t for t in self.tracks if not t.is_deleted()]
 
         # Update distance metric.
@@ -91,7 +94,9 @@ class Tracker:
             features += track.features
             targets += [track.track_id for _ in track.features]
             track.features = []
-        self.metric.partial_fit(np.asarray(features), np.asarray(targets), active_targets)
+        self.metric.partial_fit(
+            np.asarray(features), np.asarray(targets), active_targets
+        )
 
     def _full_cost_metric(self, tracks, dets, track_indices, detection_indices):
         """
@@ -109,11 +114,17 @@ class Tracker:
         pos_cost = np.empty([len(track_indices), len(detection_indices)])
         msrs = np.asarray([dets[i].to_xyah() for i in detection_indices])
         for row, track_idx in enumerate(track_indices):
-            pos_cost[row, :] = np.sqrt(
-                self.kf.gating_distance(
-                    tracks[track_idx].mean, tracks[track_idx].covariance, msrs, False
+            pos_cost[row, :] = (
+                np.sqrt(
+                    self.kf.gating_distance(
+                        tracks[track_idx].mean,
+                        tracks[track_idx].covariance,
+                        msrs,
+                        False,
+                    )
                 )
-            ) / self.GATING_THRESHOLD
+                / self.GATING_THRESHOLD
+            )
         pos_gate = pos_cost > 1.0
         # Now Compute the Appearance-based Cost Matrix
         app_cost = self.metric.distance(
@@ -130,12 +141,19 @@ class Tracker:
     def _match(self, detections):
         # Split track set into confirmed and unconfirmed tracks.
         confirmed_tracks = [i for i, t in enumerate(self.tracks) if t.is_confirmed()]
-        unconfirmed_tracks = [i for i, t in enumerate(self.tracks) if not t.is_confirmed()]
+        unconfirmed_tracks = [
+            i for i, t in enumerate(self.tracks) if not t.is_confirmed()
+        ]
 
         # Associate confirmed tracks using appearance features.
-        matches_a, unmatched_tracks_a, unmatched_detections = linear_assignment.matching_cascade(
+        (
+            matches_a,
+            unmatched_tracks_a,
+            unmatched_detections,
+        ) = linear_assignment.matching_cascade(
             self._full_cost_metric,
-            linear_assignment.INFTY_COST - 1,  # no need for self.metric.matching_threshold here,
+            linear_assignment.INFTY_COST
+            - 1,  # no need for self.metric.matching_threshold here,
             self.max_age,
             self.tracks,
             detections,
@@ -149,7 +167,11 @@ class Tracker:
         unmatched_tracks_a = [
             k for k in unmatched_tracks_a if self.tracks[k].time_since_update != 1
         ]
-        matches_b, unmatched_tracks_b, unmatched_detections = linear_assignment.min_cost_matching(
+        (
+            matches_b,
+            unmatched_tracks_b,
+            unmatched_detections,
+        ) = linear_assignment.min_cost_matching(
             iou_matching.iou_cost,
             self.max_iou_distance,
             self.tracks,
@@ -164,7 +186,15 @@ class Tracker:
 
     def _initiate_track(self, detection, class_id):
         mean, covariance = self.kf.initiate(detection.to_xyah())
-        self.tracks.append(Track(
-            mean, covariance, self._next_id, class_id, self.n_init, self.max_age,
-            detection.feature))
+        self.tracks.append(
+            Track(
+                mean,
+                covariance,
+                self._next_id,
+                class_id,
+                self.n_init,
+                self.max_age,
+                detection.feature,
+            )
+        )
         self._next_id += 1

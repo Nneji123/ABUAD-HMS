@@ -5,59 +5,74 @@ import sqlalchemy
 from dotenv import load_dotenv
 from flask import Flask, render_template
 from flask_admin import Admin
-from flask_login import LoginManager
 from webui import WebUI
 
 
-from config import configs
-from home import home
-from index import index
-from login import login
-from logout import logout, CustomIndexView
-from schema import Admins, AdminsView, db
+from configurations.config import configs
+from configurations.extensions import db, email, login_manager, socketio
+
+from views.home import home
+from views.index import index
+from views.login import login
+from views.logout import logout, CustomIndexView
+from configurations.schema import Admins, AdminsView, db
 
 
 load_dotenv()
 
 
-app = Flask(__name__, static_folder="./templates/static")
-ui = WebUI(app, port=3000, debug=True, icon_path="logo.ico", app_name="ABUAD HMS")
-
-SERVER_MODE = os.getenv("SERVER_MODE")
-if SERVER_MODE in configs:
-    app.config.update(configs[SERVER_MODE])
-    app.config.from_object(__name__)
-else:
-    raise ValueError(f"Unknown server mode: {SERVER_MODE}")
+def create_app(app):
+    app.config.update(configs)
+    register_extensions(app)
+    register_blueprints(app)
+    return app
 
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-db.init_app(app)
-app.app_context().push()
+def register_extensions(app):
+    """Register Flask extensions."""
+    login_manager.init_app(app)
+    db.init_app(app)
+    email.init_app(app)
+    socketio.init_app(app)
+    create_admin_views(app)
+    app.app_context().push()
+    return None
 
-app.register_blueprint(index)
-app.register_blueprint(login)
-app.register_blueprint(home)
-app.register_blueprint(logout)
 
-admin = Admin(
-    app, name="ABUAD", template_mode="bootstrap4", index_view=CustomIndexView()
-)
-admin.add_view(AdminsView(Admins, db.session))
+def register_blueprints(app):
+    """Register Flask blueprints."""
+    app.register_blueprint(index)
+    app.register_blueprint(login)
+    app.register_blueprint(home)
+    app.register_blueprint(logout)
+    return None
+
+
+def create_admin_views(app):
+    admin = Admin(
+        app, name="ABUAD", template_mode="bootstrap4", index_view=CustomIndexView()
+    )
+    admin.add_view(AdminsView(Admins, db.session))
+    return admin
 
 
 @login_manager.user_loader
 def load_user(user_id):
     try:
         return Admins.query.get(int(user_id))
-    except (sqlalchemy.exc.OperationalError) as e:
+    except sqlalchemy.exc.OperationalError as e:
         return render_template("error.html", e="Database not found")
 
 
+app = Flask(__name__)
+app = create_app(app)
+ui = WebUI(app, port=3000, debug=True, icon_path="logo.ico", app_name="ABUAD HMS")
+
 
 if __name__ == "__main__":
-    ui.run()
-    # app.run(
-    #     host="0.0.0.0", port=3000, debug=configs[SERVER_MODE]["DEBUG"], threaded=True
-    # )
+    if not os.path.exists("var"):
+        exec(open("init.py").read())
+    else:
+        pass
+    # ui.run()
+    app.run(host="0.0.0.0", port=3000, debug=True)

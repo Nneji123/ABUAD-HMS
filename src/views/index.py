@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect
 
-index = Blueprint("index", __name__, template_folder="./templates")
+index = Blueprint("index", __name__)
 
 
 @index.route("/", methods=["GET"])

@@ -1,14 +1,16 @@
+import sys
+from datetime import datetime
+
 from flask import Blueprint, flash, redirect, render_template, request, url_for
-from flask_login import LoginManager, login_user
+from flask_login import login_user
 from werkzeug.security import check_password_hash
 
-from schema import Admins
+sys.path.append("..")
 
-login = Blueprint(
-    "login", __name__, template_folder="./templates", static_folder="./templates/static"
-)
-login_manager = LoginManager()
-login_manager.init_app(login)
+
+from configurations.schema import db, Admins
+
+login = Blueprint("login", __name__)
 
 
 @login.route("/login", methods=["GET", "POST"])
@@ -19,8 +21,14 @@ def show():
 
         user = Admins.query.filter_by(username=username).first()
         if user:
+            if user.is_active == False:
+                flash("Your account has been deactivated !", "danger")
+                return redirect(url_for("login.show") + "?error=inactive-user")
+
             if check_password_hash(user.password, password):
                 login_user(user)
+                user.last_logged_in_at = datetime.utcnow()
+                db.session.commit()
                 return redirect(url_for("home.show"))
             else:
                 flash("Incorrect password. Please try again!", "danger")

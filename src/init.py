@@ -5,9 +5,10 @@ from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash
 
 from app import db
-from schema import Admins
+from configurations.schema import Admins
 
 load_dotenv()
+
 
 def create_new_user(username, email, password):
     try:
@@ -23,6 +24,7 @@ def create_new_user(username, email, password):
     finally:
         db.session.close()
 
+
 def main():
     if not os.path.exists("./database.db"):
         db.create_all()
@@ -32,7 +34,7 @@ def main():
         create_new_user(username=username, email=email, password=password)
     else:
         print("Database Exists with Current Admins")
-  
-  
-if __name__=="__main__":      
+
+
+if __name__ == "__main__":
     main()

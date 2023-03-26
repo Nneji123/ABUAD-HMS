@@ -1,5 +1,5 @@
 import sys
-import shutil 
+import shutil
 import os
 from cx_Freeze import setup, Executable
 
@@ -13,15 +13,11 @@ included_files = [
     ("models", "models"),
     ("deep_sort", "deep_sort"),
     ("app.py", "app.py"),
-    ("config.py", "config.py"),
+    ("configurations", "configurations"),
     (".env", ".env"),
-    ("home.py", "home.py"),
+    ("views", "views"),
     ("init.py", "init.py"),
-    ("index.py", "index.py"),
-    ("utils.py", "utils.py"),
-    ("login.py", "login.py"),
-    ("logout.py", "logout.py"),
-    ("schema.py", "schema.py"),
+    ("static", "static"),
     ("logo.ico", "logo.ico"),
 ]
 
@@ -73,6 +69,7 @@ setup(
     ],
 )
 
+
 # Define the post build function
 def post_build(build_dir):
     # Define the source and destination paths
@@ -80,5 +77,6 @@ def post_build(build_dir):
     dest_path = os.path.join(build_dir, "lib")
     # Copy the matplotlib.libs folder to the build directory
     shutil.copytree(src_path, os.path.join(dest_path, "matplotlib.libs"))
-    
+
+
 post_build(r"build\exe.win-amd64-3.8")
